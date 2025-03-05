@@ -7,11 +7,10 @@ import platform
 import random
 import string
 from telegram import Update
-from telegram.ext import Application, CommandHandler, CallbackContext, filters, MessageHandler, ContextTypes
+from telegram.ext import Application, CommandHandler, CallbackContext, filters, MessageHandler
 from pymongo import MongoClient
 from datetime import datetime, timedelta, timezone
 
-# Database Configuration
 MONGO_URI = 'mongodb+srv://Vampirexcheats:vampirexcheats1@cluster0.omdzt.mongodb.net/TEST?retryWrites=true&w=majority&appName=Cluster0'
 client = MongoClient(MONGO_URI)
 db = client['VAMPIRE']
@@ -21,7 +20,7 @@ redeem_codes_collection = db['redeem_codes']
 attack_logs_collection = db['user_attack_logs']
 
 # Bot Configuration
-TELEGRAM_BOT_TOKEN = '7635786772:AAHGl_d_Oq2I9xxsWWQTgWPoiuq88qMU0ho'
+TELEGRAM_BOT_TOKEN = '7635786772:AAHRopYwMGquagLiEXEnhCBUCMJOLeU1Wqg'
 ADMIN_USER_ID = 529691217
 COOLDOWN_PERIOD = timedelta(minutes=1) 
 user_last_attack_time = {} 
@@ -38,7 +37,7 @@ valid_ip_prefixes = ('52.', '20.', '14.', '4.', '13.')
 
 # Adjust this to your local timezone, e.g., 'America/New_York' or 'Asia/Kolkata'
 LOCAL_TIMEZONE = pytz.timezone("Asia/Kolkata")
-PROTECTED_FILES = ["Vampire.py", "vampire"]
+PROTECTED_FILES = ["Vampire.py", "Vampire"]
 BLOCKED_COMMANDS = ['nano', 'vim', 'shutdown', 'reboot', 'rm', 'mv', 'dd']
 
 # Fetch the current user and hostname dynamically
@@ -490,54 +489,47 @@ async def show_settings(update: Update, context: CallbackContext):
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=settings_text, parse_mode='Markdown')
 
-async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def list_users(update, context):
     current_time = datetime.now(timezone.utc)
-    users = list(users_collection.find())  # Convert cursor to list
-
+    users = users_collection.find() 
+    
     user_list_message = "👥 User List:\n"
-
-    if not users:  # Check if the user collection is empty
-        user_list_message += "No users found."
-    else:
-        for user in users:
-            user_id = user['user_id']
-            expiry_date = user.get('expiry_date')  # Safely get expiry_date
-
-            if expiry_date is None:  # Check if expiry_date is None
-                user_list_message += f"🔴 *User ID: {user_id} - Expiry: Not set*\n"
-                continue  # Skip to the next user
-
-            # Ensure expiry_date is timezone-aware
-            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
-                expiry_date = expiry_date.replace(tzinfo=timezone.utc)
-
-            time_remaining = expiry_date - current_time
-            if time_remaining.days < 0:
-                remaining_days = 0
-                remaining_hours = 0
-                remaining_minutes = 0
-                expired = True  
-            else:
-                remaining_days = time_remaining.days
-                remaining_hours = time_remaining.seconds // 3600
-                remaining_minutes = (time_remaining.seconds // 60) % 60
-                expired = False 
-
-            expiry_label = f"{remaining_days}D-{remaining_hours}H-{remaining_minutes}M"
-            if expired:
-                user_list_message += f"🔴 *User ID: {user_id} - Expiry: {expiry_label}*\n"
-            else:
-                user_list_message += f"🟢 User ID: {user_id} - Expiry: {expiry_label}\n"
+    
+    for user in users:
+        user_id = user['user_id']
+        expiry_date = user['expiry_date']
+        if expiry_date.tzinfo is None:
+            expiry_date = expiry_date.replace(tzinfo=timezone.utc)
+    
+        time_remaining = expiry_date - current_time
+        if time_remaining.days < 0:
+            remaining_days = -0
+            remaining_hours = 0
+            remaining_minutes = 0
+            expired = True  
+        else:
+            remaining_days = time_remaining.days
+            remaining_hours = time_remaining.seconds // 3600
+            remaining_minutes = (time_remaining.seconds // 60) % 60
+            expired = False 
+        
+        expiry_label = f"{remaining_days}D-{remaining_hours}H-{remaining_minutes}M"
+        if expired:
+            user_list_message += f"🔴 *User ID: {user_id} - Expiry: {expiry_label}*\n"
+        else:
+            user_list_message += f"🟢 User ID: {user_id} - Expiry: {expiry_label}\n"
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=user_list_message, parse_mode='Markdown')
 
 async def is_user_allowed(user_id):
     user = users_collection.find_one({"user_id": user_id})
     if user:
-        expiry_date = user.get('expiry_date')  # Safely get expiry_date
+        expiry_date = user['expiry_date']
         if expiry_date:
-            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
+            # Ensure expiry_date is timezone-aware
+            if expiry_date.tzinfo is None:
                 expiry_date = expiry_date.replace(tzinfo=timezone.utc)
+            # Compare with the current time
             if expiry_date > datetime.now(timezone.utc):
                 return True
     return False
@@ -609,6 +601,7 @@ async def log_attack(user_id, ip, port, duration):
     }
     attack_logs_collection.insert_one(attack_log)
 
+# Modify attack function to log attack history
 # Modify attack function to log attack history
 active_attack_user = None
 active_attack_start_time = None
@@ -1000,9 +993,6 @@ async def delete_code(update: Update, context: CallbackContext):
 # Function to list redeem codes
 async def list_codes(update: Update, context: CallbackContext):
     user_id = update.effective_user.id
-    print("list_codes function called")  # Debugging statement
-
-    # Check if the user is authorized
     if user_id != ADMIN_USER_ID:
         await context.bot.send_message(chat_id=update.effective_chat.id, text="*❌ You are not authorized to view redeem codes!*", parse_mode='Markdown')
         return
@@ -1018,39 +1008,37 @@ async def list_codes(update: Update, context: CallbackContext):
     
     current_time = datetime.now(timezone.utc)
     for code in codes:
-        expiry_date = code.get('expiry_date')  # Use .get() to avoid KeyError
-        if expiry_date is None:
-            continue  # Skip if expiry_date is not set
-
+        expiry_date = code['expiry_date']
+        
         # Ensure expiry_date is timezone-aware
         if expiry_date.tzinfo is None:
             expiry_date = expiry_date.replace(tzinfo=timezone.utc)
-
+        
         # Format expiry date to show only the date (YYYY-MM-DD)
         expiry_date_str = expiry_date.strftime('%Y-%m-%d')
-
+        
         # Calculate the remaining time
         time_diff = expiry_date - current_time
         remaining_minutes = time_diff.total_seconds() // 60  # Get the remaining time in minutes
-
+        
         # Avoid showing 0.0 minutes, ensure at least 1 minute is displayed
-        remaining_minutes = max(1, remaining_minutes)
-
+        remaining_minutes = max(1, remaining_minutes)  # If the remaining time is less than 1 minute, show 1 minute
+        
         # Display the remaining time in a more human-readable format
         if remaining_minutes >= 60:
-            remaining_days = remaining_minutes // 1440
-            remaining_hours = (remaining_minutes % 1440) // 60
+            remaining_days = remaining_minutes // 1440  # Days = minutes // 1440
+            remaining_hours = (remaining_minutes % 1440) // 60  # Hours = (minutes % 1440) // 60
             remaining_time = f"({remaining_days} days, {remaining_hours} hours)"
         else:
             remaining_time = f"({int(remaining_minutes)} minutes)"
-
+        
         # Determine whether the code is valid or expired
         if expiry_date > current_time:
             status = "✅"
         else:
             status = "❌"
             remaining_time = "(Expired)"
-
+        
         message += f"• Code: `{code['code']}`, Expiry: {expiry_date_str} {remaining_time} {status}\n"
 
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode='Markdown')
@@ -1059,10 +1047,10 @@ async def list_codes(update: Update, context: CallbackContext):
 async def is_user_allowed(user_id):
     user = users_collection.find_one({"user_id": user_id})
     if user:
-        expiry_date = user.get('expiry_date')  # Safely get expiry_date
+        expiry_date = user['expiry_date']
         if expiry_date:
-            if isinstance(expiry_date, datetime) and expiry_date.tzinfo is None:
-                expiry_date = expiry_date.replace(tzinfo=timezone.utc)
+            if expiry_date.tzinfo is None:
+                expiry_date = expiry_date.replace(tzinfo=timezone.utc)  # Ensure timezone awareness
             if expiry_date > datetime.now(timezone.utc):
                 return True
     return False
