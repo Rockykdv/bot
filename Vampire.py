@@ -41,12 +41,13 @@ PROTECTED_FILES = ["Vampire.py", "Vampire"]
 BLOCKED_COMMANDS = ['nano', 'vim', 'shutdown', 'reboot', 'rm', 'mv', 'dd']
 
 # Fetch the current user and hostname dynamically
-USER_NAME = os.getlogin()  # Get the current system user
+USER_NAME = getpass.getuser()  # Get the current system user
 HOST_NAME = socket.gethostname()  # Get the system's hostname
 
 # Store the current directory path
-current_directory = os.path.expanduser("~")  #
-# Function to get dynamic user and hostname info
+current_directory = os.path.expanduser("~") 
+
+
 def get_user_and_host():
     try:
         # Try getting the username and hostname from the system
