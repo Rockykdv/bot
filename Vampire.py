@@ -40,12 +40,6 @@ LOCAL_TIMEZONE = pytz.timezone("Asia/Kolkata")
 PROTECTED_FILES = ["Vampire.py", "Vampire"]
 BLOCKED_COMMANDS = ['nano', 'vim', 'shutdown', 'reboot', 'rm', 'mv', 'dd']
 
-# Fetch the current user and hostname dynamically
-USER_NAME = os.getlogin()  # Get the current system user
-HOST_NAME = socket.gethostname()  # Get the system's hostname
-
-# Store the current directory path
-current_directory = os.path.expanduser("~")  # Default to the home directory
 
 # Function to get dynamic user and hostname info
 def get_user_and_host():
