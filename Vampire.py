@@ -186,7 +186,7 @@ def start_command(message):
     else:
         markup.add(attack_button, myinfo_button, redeem_button)
         
-    bot.reply_to(message, "𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼  𝗯𝗼𝘁!", reply_markup=markup)
+    bot.reply_to(message, "𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 𝘃𝗮𝗺𝗽𝗶𝗿𝗲𝘅𝗰𝗵𝗲𝗮𝘁𝘀 𝗯𝗼𝘁!", reply_markup=markup)
     
 @bot.message_handler(func=lambda message: message.text == "⚙️ Settings")
 def settings_command(message):
